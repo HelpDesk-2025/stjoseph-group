@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #040410;
+  --navy-700: #1e1e33;
+  --amber: #cc7b1d;
+  --cyan: #229bf1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--navy);
+  color: #ffffff;
+  font-family: var(--font-poppins), "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #040410;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e1e33;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #cc7b1d;
+}
+
+/* Selection */
+::selection {
+  background: rgba(204, 123, 29, 0.35);
+  color: #fff;
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-9;
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.28em] text-amber;
+  }
+
+  .heading-xl {
+    @apply font-sans text-4xl font-medium leading-[1.08] sm:text-5xl lg:text-6xl;
+  }
+
+  .heading-lg {
+    @apply font-sans text-3xl font-medium leading-tight sm:text-4xl;
+  }
+
+  .body-text {
+    @apply font-mono text-[13.5px] leading-relaxed text-ink-200;
+  }
+
+  .btn {
+    @apply inline-flex min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-md px-7 py-3 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-navy;
+  }
+  .btn-primary {
+    @apply btn bg-amber text-white hover:scale-[1.02] hover:bg-amber-dark active:scale-100 active:bg-amber-deep;
+  }
+  .btn-secondary {
+    @apply btn border-2 border-white bg-white text-navy hover:bg-ink-50;
+  }
+  .btn-ghost {
+    @apply btn border border-white/70 bg-transparent text-white hover:border-cyan-light hover:bg-white/10;
+  }
+
+  .card-dark {
+    @apply rounded-card border border-white/10 bg-navy-800/60 p-5 shadow-soft backdrop-blur-sm;
+  }
+
+  .glass {
+    @apply border border-white/10 bg-white/[0.04] backdrop-blur-md;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Light section theme                                                 */
+/* Add `section-light` to a <section> to flip it to the light palette. */
+/* It remaps the dark-mode utility classes used inside sections so the */
+/* markup stays untouched. Alternates with the default dark sections   */
+/* to create a light/dark rhythm down the page.                        */
+/* ------------------------------------------------------------------ */
+.section-light {
+  background-color: #f6f3ee;
+  color: #14142b;
+}
+/* soft top/bottom hairlines to separate from adjacent dark sections */
+.section-light {
+  box-shadow: inset 0 1px 0 rgba(4, 4, 16, 0.06),
+    inset 0 -1px 0 rgba(4, 4, 16, 0.06);
+}
+
+/* text colors */
+.section-light .text-white { color: #14142b; }
+.section-light .text-ink-100 { color: #2f313f; }
+.section-light .text-ink-200 { color: #565967; }
+.section-light .text-ink-300 { color: #6f7280; }
+.section-light .text-ink-400 { color: #8b8e9b; }
+.section-light .text-white\/85 { color: rgba(20, 20, 43, 0.85); }
+.section-light .text-white\/90 { color: rgba(20, 20, 43, 0.9); }
+.section-light .text-white\/10 { color: rgba(4, 4, 16, 0.08); }
+
+/* card & surface backgrounds -> white cards on cream */
+.section-light .bg-navy-800,
+.section-light .bg-navy-800\/60,
+.section-light .bg-navy-800\/50,
+.section-light .bg-navy-800\/40,
+.section-light .bg-navy-800\/30 {
+  background-color: #ffffff;
+}
+.section-light .bg-navy-800\/50,
+.section-light .bg-navy-800\/40 {
+  box-shadow: 0 6px 20px rgba(4, 4, 16, 0.06);
+}
+/* section-level tint backgrounds become transparent (cream shows through) */
+.section-light .bg-navy-900\/50,
+.section-light .bg-navy-900\/40 {
+  background-color: transparent;
+}
+/* faint fills */
+.section-light .bg-white\/5 { background-color: rgba(4, 4, 16, 0.05); }
+.section-light .bg-white\/\[0\.04\] { background-color: rgba(4, 4, 16, 0.04); }
+
+/* borders */
+.section-light .border-white\/10 { border-color: rgba(4, 4, 16, 0.1); }
+.section-light .border-white\/15 { border-color: rgba(4, 4, 16, 0.14); }
+.section-light .border-white\/25 { border-color: rgba(4, 4, 16, 0.22); }
+
+/* hover states */
+.section-light .hover\:bg-navy-800:hover { background-color: #f0ebe2; }
+.section-light .hover\:border-white\/25:hover { border-color: rgba(4, 4, 16, 0.28); }
+
+/* gradient text: start dark so it reads on cream.
+   NOTE: use background-image (not the `background` shorthand) so the
+   inherited background-clip:text is preserved. */
+.section-light .text-gradient-amber {
+  background-image: linear-gradient(120deg, #3a2a12 0%, #b0691a 55%, #e89f00 100%);
+}
+.section-light .text-gradient-cyan {
+  background-image: linear-gradient(120deg, #10344f 0%, #1f7fc4 55%, #229bf1 100%);
+}
+
+/* opt-out: keep a deliberately dark element (e.g. EOS core badge) legible */
+.section-light .keep-dark .text-ink-300 { color: #b7bac6; }
+
+@layer utilities {
+  .text-gradient-amber {
+    background: linear-gradient(120deg, #ffffff 0%, #f0c48a 45%, #cc7b1d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-gradient-cyan {
+    background: linear-gradient(120deg, #ffffff 0%, #93d4ff 60%, #229bf1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .grid-fade {
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 100%);
+  }
+  .noise-overlay {
+    position: relative;
+  }
+}
