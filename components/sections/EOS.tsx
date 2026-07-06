@@ -23,17 +23,62 @@ export default function EOS() {
         <div className="mt-16 grid items-center gap-12 lg:grid-cols-2">
           {/* Interactive orbital diagram */}
           <Reveal>
-            <div className="relative mx-auto aspect-square w-full max-w-md">
-              {/* rotating ring */}
+            <div
+              className="relative mx-auto aspect-square w-full max-w-md"
+              style={{ perspective: "1100px" }}
+            >
+              {/* Tilted disc spinning in 3D around its vertical axis */}
               <motion.div
-                className="absolute inset-0 rounded-full border border-dashed border-white/15"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-              />
-              <div className="absolute inset-[14%] rounded-full border border-white/10" />
+                className="absolute inset-0"
+                style={{ transformStyle: "preserve-3d", rotateX: 62 }}
+                animate={{ rotateZ: 360 }}
+                transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+              >
+                {/* rings sit on the tilted plane */}
+                <div className="absolute inset-0 rounded-full border border-dashed border-white/15" />
+                <div className="absolute inset-[14%] rounded-full border border-white/10" />
 
-              {/* center */}
-              <div className="keep-dark absolute left-1/2 top-1/2 z-10 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-amber/40 bg-navy text-center shadow-glow">
+                {/* nodes — orbit in depth; label counter-rotates to face the camera */}
+                {eos.components.map((c, i) => {
+                  const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+                  const x = 50 + Math.cos(angle) * 42;
+                  const y = 50 + Math.sin(angle) * 42;
+                  const isActive = active === i;
+                  return (
+                    <button
+                      key={c.key}
+                      onMouseEnter={() => setActive(i)}
+                      onClick={() => setActive(i)}
+                      aria-label={c.title}
+                      className="absolute z-20 -translate-x-1/2 -translate-y-1/2"
+                      style={{ left: `${x}%`, top: `${y}%`, transformStyle: "preserve-3d" }}
+                    >
+                      {/* undo the spin first, then the tilt (nested for correct order) */}
+                      <motion.span
+                        className="block"
+                        style={{ transformStyle: "preserve-3d" }}
+                        animate={{ rotateZ: -360 }}
+                        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+                      >
+                        <motion.span
+                          className={`flex h-16 w-16 items-center justify-center rounded-full border text-center font-sans text-[11px] font-semibold transition-colors duration-300 ${
+                            isActive
+                              ? "border-amber bg-amber text-navy shadow-glow"
+                              : "border-white/15 bg-navy-800 text-white hover:border-amber/50"
+                          }`}
+                          animate={{ rotateX: -62, scale: isActive ? 1.1 : 1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {c.title}
+                        </motion.span>
+                      </motion.span>
+                    </button>
+                  );
+                })}
+              </motion.div>
+
+              {/* center hub — stays flat, facing the camera */}
+              <div className="keep-dark pointer-events-none absolute left-1/2 top-1/2 z-30 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-amber/40 bg-navy text-center shadow-glow">
                 <span className="font-sans text-2xl font-bold text-amber">EOS®</span>
                 <span className="mt-1 font-mono text-[9px] uppercase tracking-wider text-ink-300">
                   6 Key
@@ -41,34 +86,6 @@ export default function EOS() {
                   Components
                 </span>
               </div>
-
-              {/* nodes */}
-              {eos.components.map((c, i) => {
-                const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
-                const x = 50 + Math.cos(angle) * 42;
-                const y = 50 + Math.sin(angle) * 42;
-                const isActive = active === i;
-                return (
-                  <button
-                    key={c.key}
-                    onMouseEnter={() => setActive(i)}
-                    onClick={() => setActive(i)}
-                    aria-label={c.title}
-                    className="absolute z-20 -translate-x-1/2 -translate-y-1/2"
-                    style={{ left: `${x}%`, top: `${y}%` }}
-                  >
-                    <span
-                      className={`flex h-16 w-16 items-center justify-center rounded-full border text-center font-sans text-[11px] font-semibold transition-all duration-300 ${
-                        isActive
-                          ? "scale-110 border-amber bg-amber text-navy shadow-glow"
-                          : "border-white/15 bg-navy-800 text-white hover:border-amber/50"
-                      }`}
-                    >
-                      {c.title}
-                    </span>
-                  </button>
-                );
-              })}
             </div>
           </Reveal>
 
