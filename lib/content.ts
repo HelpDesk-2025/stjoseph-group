@@ -10,7 +10,7 @@
  */
 
 export const company = {
-  name: "St. Joseph Group",
+  name: "St. Joseph Group, Inc.",
   legalName: "St. Joseph Group Holdings, Inc.",
   short: "SJG",
   tagline: "Creating Meaningful Lives",
@@ -30,7 +30,7 @@ export const hero = {
   titleAccent: "Nine Businesses.",
   titleEnd: "A Shared Purpose.",
   subtitle:
-    "St. Joseph Group brings together nine business units under a single vision — to create meaningful lives for our people, partners, and the communities we serve.",
+    "St. Joseph Group, Inc. brings together nine business units under a single vision — to create meaningful lives for our people, partners, and the communities we serve.",
   primaryCta: { label: "Explore Our Businesses", href: "#business-units" },
   secondaryCta: { label: "Investor Relations", href: "/investor-relations" },
   stats: [
@@ -280,7 +280,7 @@ export const eos = {
   eyebrow: "How We Run — EOS",
   title: "One operating system across every business",
   intro:
-    "St. Joseph Group runs on EOS® — the Entrepreneurial Operating System. It is the shared framework that keeps all nine business units aligned, accountable, and moving in the same direction, with the same disciplines and the same language.",
+    "St. Joseph Group, Inc. runs on EOS® — the Entrepreneurial Operating System. It is the shared framework that keeps all nine business units aligned, accountable, and moving in the same direction, with the same disciplines and the same language.",
   components: [
     {
       key: "Vision",
@@ -391,7 +391,7 @@ export const journey = {
     {
       year: "1998",
       title: "The Beginning",
-      desc: "St. Joseph Group is founded with a single enterprise and a bold conviction that business should create meaningful lives.",
+      desc: "St. Joseph Group, Inc. is founded with a single enterprise and a bold conviction that business should create meaningful lives.",
     },
     {
       year: "2001",
@@ -416,7 +416,7 @@ export const journey = {
     {
       year: "2024",
       title: "Nine and Growing",
-      desc: "St. Joseph Group operates nine business units, over 8,000 team members, and a shared purpose that endures.",
+      desc: "St. Joseph Group, Inc. operates nine business units, over 8,000 team members, and a shared purpose that endures.",
     },
   ],
 };
@@ -425,7 +425,7 @@ export const journey = {
 export const greatPlace = {
   eyebrow: "Our Culture",
   title: "A certified Great Place To Work®",
-  body: "We believe meaningful lives begin at work. Our people-first culture, growth opportunities, and shared values make St. Joseph Group a place where careers — and people — flourish.",
+  body: "We believe meaningful lives begin at work. Our people-first culture, growth opportunities, and shared values make St. Joseph Group, Inc. a place where careers — and people — flourish.",
   stats: [
     { value: "92%", label: "Employee trust index" },
     { value: "4.7/5", label: "Employee satisfaction" },
@@ -443,7 +443,7 @@ export const greatPlace = {
 export const testimonials = [
   {
     quote:
-      "St. Joseph Group has been more than an employer — it has been a place where I've grown as a leader and as a person. The purpose here is real.",
+      "St. Joseph Group, Inc. has been more than an employer — it has been a place where I've grown as a leader and as a person. The purpose here is real.",
     name: "Maria Santos",
     role: "Regional Director, SJ Healthcare",
   },
@@ -461,7 +461,7 @@ export const testimonials = [
   },
   {
     quote:
-      "The professionalism and long-term thinking of St. Joseph Group make them the kind of partner every serious investor looks for.",
+      "The professionalism and long-term thinking of St. Joseph Group, Inc. make them the kind of partner every serious investor looks for.",
     name: "Angela Lim",
     role: "Managing Partner, Institutional Investor",
   },
@@ -471,7 +471,7 @@ export const testimonials = [
 export const careers = {
   eyebrow: "Careers",
   title: "Build a meaningful career with us",
-  body: "Across nine industries and one shared purpose, there is a place for you at St. Joseph Group. Explore roles where your work truly matters.",
+  body: "Across nine industries and one shared purpose, there is a place for you at St. Joseph Group, Inc.. Explore roles where your work truly matters.",
   perks: [
     "Careers across 9 diverse industries",
     "Structured growth & leadership development",
@@ -494,7 +494,7 @@ export const investor = {
   eyebrow: "Investor Relations",
   title: "Partnering for enduring value",
   intro:
-    "St. Joseph Group is committed to disciplined growth, transparent governance, and long-term value creation across our diversified portfolio. Explore our performance, governance, and reports.",
+    "St. Joseph Group, Inc. is committed to disciplined growth, transparent governance, and long-term value creation across our diversified portfolio. Explore our performance, governance, and reports.",
   metrics: [
     { value: "₱120B", label: "Group Revenue (FY2024)", note: "+14% year-on-year" },
     { value: "₱38B", label: "EBITDA", note: "31.6% margin" },

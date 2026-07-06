@@ -1,6 +1,6 @@
-# St. Joseph Group
+# St. Joseph Group, Inc.
 
-Marketing website for **St. Joseph Group** — a diversified holding company of nine business units, built to communicate the group's purpose: _creating meaningful lives_.
+Marketing website for **St. Joseph Group, Inc.** — a diversified holding company of nine business units, built to communicate the group's purpose: _creating meaningful lives_.
 
 ## Tech stack
 

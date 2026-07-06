@@ -27,7 +27,7 @@ export default function UnitBody({
               </p>
               <div className="mt-8 h-px w-full bg-white/10" />
               <p className="mt-8 font-mono text-sm leading-relaxed text-ink-200">
-                {unit.summary} As part of St. Joseph Group, {unit.short} operates on
+                {unit.summary} As part of St. Joseph Group, Inc., {unit.short} operates on
                 the shared EOS® framework and the group&apos;s five core values —
                 aligning every decision with our purpose of creating meaningful lives.
               </p>

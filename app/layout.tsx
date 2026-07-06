@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   description: company.intro,
   keywords: [
-    "St. Joseph Group",
+    "St. Joseph Group, Inc.",
     "holding company",
     "Philippines",
     "diversified group",

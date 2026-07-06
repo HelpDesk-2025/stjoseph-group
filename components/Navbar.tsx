@@ -30,7 +30,7 @@ export default function Navbar() {
       }`}
     >
       <nav className="container-x flex h-16 items-center justify-between">
-        <Link href="/" aria-label="St. Joseph Group home" className="shrink-0">
+        <Link href="/" aria-label="St. Joseph Group, Inc. home" className="shrink-0">
           <Logo />
         </Link>
 

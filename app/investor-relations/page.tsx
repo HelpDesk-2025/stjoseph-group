@@ -75,7 +75,7 @@ export default function InvestorRelationsPage() {
                 Consistent, disciplined growth
               </h2>
               <p className="mt-5 font-mono text-sm leading-relaxed text-ink-200">
-                Over the past five years, St. Joseph Group has delivered steady
+                Over the past five years, St. Joseph Group, Inc. has delivered steady
                 revenue expansion across its diversified portfolio — driven by
                 operational discipline, prudent capital allocation, and a
                 relentless focus on long-term value creation.
