@@ -85,13 +85,13 @@ export default function SectionNav() {
   return (
     <nav
       aria-label="Page sections"
-      className="fixed inset-x-0 top-1/2 z-50 hidden -translate-y-1/2 lg:block"
+      className="pointer-events-none fixed inset-x-0 top-1/2 z-50 hidden -translate-y-1/2 lg:block"
     >
       <div className="container-x">
         <div
-          className={`inline-block transition-all duration-500 ease-out ${
+          className={`w-max transition-all duration-500 ease-out ${
             visible
-              ? "translate-x-0 opacity-100"
+              ? "pointer-events-auto translate-x-0 opacity-100"
               : "pointer-events-none -translate-x-4 opacity-0"
           }`}
         >
