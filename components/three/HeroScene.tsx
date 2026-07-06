@@ -1,12 +1,14 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useRouter } from "next/navigation";
+import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import {
   Float,
   Icosahedron,
   MeshDistortMaterial,
   AdaptiveDpr,
+  Html,
 } from "@react-three/drei";
 import * as THREE from "three";
 import { businessUnits } from "@/lib/content";
@@ -69,12 +71,16 @@ function Node({
   offset,
   y,
   color,
+  name,
+  onSelect,
 }: {
   radius: number;
   speed: number;
   offset: number;
   y: number;
   color: string;
+  name: string;
+  onSelect: () => void;
 }) {
   const ref = useRef<THREE.Group>(null!);
   const [hovered, setHovered] = useState(false);
@@ -104,6 +110,12 @@ function Node({
         setHovered(false);
         document.body.style.cursor = "";
       }}
+      // don't let a click on a planet start a drag
+      onPointerDown={(e) => e.stopPropagation()}
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect();
+      }}
     >
       <mesh>
         <sphereGeometry args={[0.16, 24, 24]} />
@@ -123,6 +135,13 @@ function Node({
           opacity={hovered ? 0.28 : 0.12}
         />
       </mesh>
+      {hovered && (
+        <Html center distanceFactor={9} zIndexRange={[20, 0]} style={{ pointerEvents: "none" }}>
+          <div className="whitespace-nowrap rounded-full border border-white/15 bg-navy/90 px-3 py-1 font-mono text-[11px] text-white shadow-glow backdrop-blur-sm">
+            {name}
+          </div>
+        </Html>
+      )}
     </group>
   );
 }
@@ -132,22 +151,68 @@ const SYSTEM_SCALE = 0.5;
 const SYSTEM_OFFSET: [number, number, number] = [2.55, 0, 0];
 
 function CoreSystem() {
+  const tilt = useRef<THREE.Group>(null!);
   const group = useRef<THREE.Group>(null!);
   const inner = useRef<THREE.Mesh>(null!);
   const progress = useScrollProgress();
-  const { pointer } = useThree();
+  const { gl } = useThree();
+  const router = useRouter();
+
+  // drag state
+  const dragging = useRef(false);
+  const prev = useRef({ x: 0, y: 0 });
+  const vel = useRef({ x: 0, y: 0 });
+
+  const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
+    e.stopPropagation();
+    dragging.current = true;
+    prev.current = { x: e.clientX, y: e.clientY };
+    vel.current = { x: 0, y: 0 };
+    gl.domElement.setPointerCapture?.(e.pointerId);
+    document.body.style.cursor = "grabbing";
+  };
+  const onPointerMove = (e: ThreeEvent<PointerEvent>) => {
+    if (!dragging.current || !group.current) return;
+    const dx = (e.clientX - prev.current.x) * 0.006;
+    const dy = (e.clientY - prev.current.y) * 0.006;
+    prev.current = { x: e.clientX, y: e.clientY };
+    group.current.rotation.y += dx;
+    group.current.rotation.x = THREE.MathUtils.clamp(
+      group.current.rotation.x + dy,
+      -1.2,
+      1.2
+    );
+    vel.current = { x: dy, y: dx };
+  };
+  const endDrag = (e: ThreeEvent<PointerEvent>) => {
+    if (!dragging.current) return;
+    dragging.current = false;
+    gl.domElement.releasePointerCapture?.(e.pointerId);
+    document.body.style.cursor = "";
+  };
 
   useFrame((state, dt) => {
-    if (group.current) {
-      // mouse parallax + scroll-driven tilt (the "3D scrolling")
-      group.current.rotation.y +=
-        dt * 0.15 + (pointer.x * 0.4 - group.current.rotation.y) * 0.02;
-      group.current.rotation.x = THREE.MathUtils.lerp(
-        group.current.rotation.x,
-        pointer.y * -0.3 + progress.current * 1.2,
+    // outer group: scroll-driven tilt + gentle float (the "3D scrolling")
+    if (tilt.current) {
+      tilt.current.rotation.x = THREE.MathUtils.lerp(
+        tilt.current.rotation.x,
+        progress.current * 0.9,
         0.05
       );
-      group.current.position.y = Math.sin(state.clock.elapsedTime * 0.4) * 0.1;
+      tilt.current.position.y = Math.sin(state.clock.elapsedTime * 0.4) * 0.1;
+    }
+    // inner group: user drag + inertia, plus a slow idle spin when released
+    if (group.current) {
+      if (!dragging.current) {
+        group.current.rotation.y += dt * 0.15 + vel.current.y;
+        group.current.rotation.x = THREE.MathUtils.clamp(
+          group.current.rotation.x + vel.current.x,
+          -1.2,
+          1.2
+        );
+        vel.current.x *= 0.94;
+        vel.current.y *= 0.94;
+      }
     }
     if (inner.current) inner.current.rotation.x += dt * 0.25;
   });
@@ -157,6 +222,8 @@ function CoreSystem() {
     return businessUnits.map((u, i) => {
       const ring = i % 3;
       return {
+        slug: u.slug,
+        name: u.name,
         color: u.accent,
         radius: 2.4 + ring * 0.9,
         y: (ring - 1) * 0.7,
@@ -168,7 +235,25 @@ function CoreSystem() {
 
   return (
     <group position={SYSTEM_OFFSET} scale={SYSTEM_SCALE}>
-    <group ref={group}>
+    <group ref={tilt}>
+      {/* invisible catcher — grab empty space (or the core) to spin the system.
+          BackSide so planets in front always win the raycast. */}
+      <mesh
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerOver={() => {
+          if (!dragging.current) document.body.style.cursor = "grab";
+        }}
+        onPointerOut={() => {
+          if (!dragging.current) document.body.style.cursor = "";
+        }}
+      >
+        <sphereGeometry args={[5.2, 16, 16]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} side={THREE.BackSide} />
+      </mesh>
+
+      <group ref={group}>
       {/* faceted distorting core */}
       <Float speed={1.4} rotationIntensity={0.4} floatIntensity={0.6}>
         <Icosahedron args={[1.35, 3]}>
@@ -197,8 +282,13 @@ function CoreSystem() {
       ))}
 
       {rings.map((n, i) => (
-        <Node key={i} {...n} />
+        <Node
+          key={i}
+          {...n}
+          onSelect={() => router.push(`/business-units/${n.slug}`)}
+        />
       ))}
+      </group>
     </group>
     </group>
   );

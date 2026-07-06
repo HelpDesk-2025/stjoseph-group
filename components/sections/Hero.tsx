@@ -36,13 +36,13 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-navy/70 via-navy/20 to-navy" />
       <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(204,123,29,0.18),transparent_70%)]" />
 
-      {/* content */}
-      <div className="container-x relative z-10 flex min-h-[100svh] flex-col justify-center pb-24 pt-24">
+      {/* content — let empty areas pass pointer events through to the 3D canvas */}
+      <div className="container-x pointer-events-none relative z-10 flex min-h-[100svh] flex-col justify-center pb-24 pt-24">
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="max-w-3xl"
+          className="pointer-events-auto max-w-3xl"
         >
           <motion.span
             variants={item}
