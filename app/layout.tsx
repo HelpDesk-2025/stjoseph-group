@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Roboto_Mono } from "next/font/google";
 import "./globals.css";
-import { company } from "@/lib/content";
+import { getSiteContent } from "@/lib/data";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -17,25 +17,36 @@ const robotoMono = Roboto_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: `${company.name} — ${company.tagline}`,
-    template: `%s — ${company.name}`,
-  },
-  description: company.intro,
-  keywords: [
-    "St. Joseph Group, Inc.",
-    "holding company",
-    "Philippines",
-    "diversified group",
-    "creating meaningful lives",
-  ],
-  openGraph: {
-    title: `${company.name} — ${company.tagline}`,
+export async function generateMetadata(): Promise<Metadata> {
+  const company = await getSiteContent("company");
+  const c = company as typeof company & {
+    favicon?: string;
+    ogImage?: string;
+  };
+  const title = `${company.name} — ${company.tagline}`;
+
+  return {
+    title: {
+      default: title,
+      template: `%s — ${company.name}`,
+    },
     description: company.intro,
-    type: "website",
-  },
-};
+    keywords: [
+      company.name,
+      "holding company",
+      "Philippines",
+      "diversified group",
+      "creating meaningful lives",
+    ],
+    ...(c.favicon ? { icons: { icon: c.favicon } } : {}),
+    openGraph: {
+      title,
+      description: company.intro,
+      type: "website",
+      ...(c.ogImage ? { images: [{ url: c.ogImage }] } : {}),
+    },
+  };
+}
 
 export default function RootLayout({
   children,

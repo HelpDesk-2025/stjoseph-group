@@ -21,6 +21,11 @@ export const company = {
   address: "SJG Corporate Center, Ortigas Center, Pasig City, Philippines",
   intro:
     "A diversified Filipino holding company building enduring businesses across property, hospitality, healthcare, education and beyond — united by one purpose: creating meaningful lives.",
+  // Brand assets (uploaded via the admin). Empty = use the built-in star mark
+  // / default favicon / no social image.
+  logo: "",
+  favicon: "",
+  ogImage: "",
 };
 
 /* ── HERO ──────────────────────────────────────────────────────────── */

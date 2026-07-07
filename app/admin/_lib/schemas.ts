@@ -56,6 +56,9 @@ export const sectionSchemas: Record<string, SectionSchema> = {
       { name: "phone", label: "Phone", kind: "text" },
       { name: "address", label: "Address", kind: "text" },
       { name: "intro", label: "Intro paragraph", kind: "textarea" },
+      { name: "logo", label: "Site logo (header/footer)", kind: "image", folder: "brand" },
+      { name: "favicon", label: "Favicon (browser tab)", kind: "image", folder: "brand" },
+      { name: "ogImage", label: "Social share image (OG)", kind: "image", folder: "brand" },
     ],
   },
   hero: {
