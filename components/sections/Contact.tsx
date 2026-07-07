@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { contact, company } from "@/lib/content";
+import { submitContact } from "@/app/actions/contact";
 import Reveal from "@/components/Reveal";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -9,27 +10,24 @@ type Status = "idle" | "sending" | "sent" | "error";
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [formError, setFormError] = useState<string | null>(null);
 
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setFormError(null);
     const data = new FormData(e.currentTarget);
-    const next: Record<string, string> = {};
-    if (!String(data.get("name") || "").trim()) next.name = "Please enter your name.";
-    const email = String(data.get("email") || "").trim();
-    if (!email) next.email = "Please enter your email.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      next.email = "Please enter a valid email address.";
-    if (!String(data.get("message") || "").trim())
-      next.message = "Please enter a message.";
 
-    setErrors(next);
-    if (Object.keys(next).length) {
+    setStatus("sending");
+    const result = await submitContact(data);
+
+    if (!result.ok) {
+      setErrors(result.errors ?? {});
+      setFormError(result.message ?? null);
       setStatus("error");
       return;
     }
-    setStatus("sending");
-    // Simulated submission — wire to a real endpoint / email service later.
-    setTimeout(() => setStatus("sent"), 1100);
+    setErrors({});
+    setStatus("sent");
   }
 
   return (
@@ -147,6 +145,12 @@ export default function Contact() {
                       className="field resize-none"
                     />
                   </Field>
+
+                  {formError && (
+                    <p role="alert" className="font-mono text-[12px] text-[#FF6B6B]">
+                      {formError}
+                    </p>
+                  )}
 
                   <button
                     type="submit"

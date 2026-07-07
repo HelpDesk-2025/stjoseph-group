@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { company, businessUnits } from "@/lib/content";
 import Logo from "./Logo";
+import NewsletterForm from "./NewsletterForm";
 
 export default function Footer() {
   return (
@@ -71,6 +72,15 @@ export default function Footer() {
             </li>
             <li className="font-mono text-[13px] text-ink-200">{company.phone}</li>
           </ul>
+
+          <div className="mt-6">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-ink-300">
+              Get updates
+            </p>
+            <div className="mt-3">
+              <NewsletterForm source="footer" />
+            </div>
+          </div>
         </div>
       </div>
 

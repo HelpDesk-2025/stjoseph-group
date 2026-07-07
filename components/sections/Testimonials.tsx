@@ -2,11 +2,17 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { testimonials } from "@/lib/content";
+import { testimonials as staticTestimonials } from "@/lib/content";
+import type { Testimonial } from "@/lib/data";
 import SectionHeader from "@/components/SectionHeader";
 import Reveal from "@/components/Reveal";
 
-export default function Testimonials() {
+export default function Testimonials({
+  items = staticTestimonials,
+}: {
+  items?: Testimonial[];
+}) {
+  const testimonials = items;
   const [i, setI] = useState(0);
   const [dir, setDir] = useState(1);
   const t = testimonials[i];

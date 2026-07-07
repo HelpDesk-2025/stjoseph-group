@@ -11,8 +11,11 @@ import Careers from "@/components/sections/Careers";
 import Contact from "@/components/sections/Contact";
 import ScrollDecor from "@/components/ScrollDecor";
 import SectionNav from "@/components/SectionNav";
+import { getTestimonials } from "@/lib/data";
 
-export default function Home() {
+export default async function Home() {
+  const testimonials = await getTestimonials();
+
   return (
     <>
       <ScrollDecor />
@@ -25,7 +28,7 @@ export default function Home() {
       <CoreValues />
       <Journey />
       <GreatPlace />
-      <Testimonials />
+      <Testimonials items={testimonials} />
       <Careers />
       <Contact />
     </>
