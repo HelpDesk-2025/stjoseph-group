@@ -1,10 +1,15 @@
 "use client";
 
-import { coreValues } from "@/lib/content";
+import { coreValues as staticCoreValues } from "@/lib/content";
 import SectionHeader from "@/components/SectionHeader";
 import Reveal from "@/components/Reveal";
 
-export default function CoreValues() {
+export default function CoreValues({
+  items = staticCoreValues,
+}: {
+  items?: typeof staticCoreValues;
+}) {
+  const coreValues = items;
   return (
     <section id="values" className="section-light relative border-y border-white/10 bg-navy-900/40 py-24 sm:py-28">
       <div className="container-x lg:!pl-48">

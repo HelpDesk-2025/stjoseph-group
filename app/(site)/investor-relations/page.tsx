@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { investor } from "@/lib/content";
+import { investor as staticInvestor } from "@/lib/content";
+import { getSiteContent } from "@/lib/data";
 import Reveal from "@/components/Reveal";
 import Counter from "@/components/Counter";
 import RevenueChart from "@/components/RevenueChart";
 import { ArrowIcon } from "@/components/Icons";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Investor Relations",
-  description: investor.intro,
+  description: staticInvestor.intro,
 };
 
-export default function InvestorRelationsPage() {
+export default async function InvestorRelationsPage() {
+  const investor = await getSiteContent("investor");
   return (
     <>
       {/* Hero */}
@@ -66,7 +70,7 @@ export default function InvestorRelationsPage() {
       <section className="relative py-16">
         <div className="container-x grid items-center gap-10 lg:grid-cols-[1.3fr_1fr]">
           <Reveal>
-            <RevenueChart />
+            <RevenueChart data={investor.performance} />
           </Reveal>
           <Reveal delay={0.1}>
             <div>

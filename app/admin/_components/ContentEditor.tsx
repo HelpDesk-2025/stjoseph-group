@@ -39,11 +39,14 @@ function emptyItem(fields: Field[]): any {
 export default function ContentEditor({
   schema,
   initial,
+  onSave,
 }: {
   schema: SectionSchema;
   initial: any;
+  /** Override the save behavior (e.g. business units). Defaults to saveSiteContent. */
+  onSave?: (json: string) => Promise<{ ok: boolean; error?: string }>;
 }) {
-  const [data, setData] = useState<any>(initial ?? {});
+  const [data, setData] = useState<any>(initial ?? (schema.rootList ? [] : {}));
   const [pending, start] = useTransition();
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
@@ -52,11 +55,14 @@ export default function ContentEditor({
   const update = (path: (string | number)[], value: any) =>
     setData((prev: any) => setIn(prev, path, value));
 
-  const onSave = () => {
+  const handleSave = () => {
     setMsg(null);
     setErr(null);
     start(async () => {
-      const res = await saveSiteContent(schema.key, JSON.stringify(data));
+      const json = JSON.stringify(data);
+      const res = onSave
+        ? await onSave(json)
+        : await saveSiteContent(schema.key, json);
       if (res.ok) {
         setMsg("Saved. Changes are live.");
         router.refresh();
@@ -204,16 +210,28 @@ export default function ContentEditor({
     }
   }
 
+  const rootField: Field | null = schema.rootList
+    ? ({
+        name: "",
+        label: schema.title,
+        kind: schema.rootList.kind,
+        itemLabel: schema.rootList.itemLabel,
+        fields: schema.rootList.fields ?? [],
+      } as Field)
+    : null;
+
   return (
     <div className="space-y-6">
-      {schema.fields.map((f) => (
-        <div key={f.name}>{renderField(f, [f.name])}</div>
-      ))}
+      {rootField
+        ? renderField(rootField, [])
+        : (schema.fields ?? []).map((f) => (
+            <div key={f.name}>{renderField(f, [f.name])}</div>
+          ))}
 
       <div className="sticky bottom-0 -mx-4 flex items-center gap-4 border-t border-white/10 bg-navy/90 px-4 py-4 backdrop-blur">
         <button
           type="button"
-          onClick={onSave}
+          onClick={handleSave}
           disabled={pending}
           className="rounded-md bg-amber px-5 py-2.5 font-sans text-sm font-medium text-navy transition-opacity hover:opacity-90 disabled:opacity-60"
         >

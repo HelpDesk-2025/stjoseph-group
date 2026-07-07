@@ -1,10 +1,15 @@
 "use client";
 
-import { greatPlace } from "@/lib/content";
+import { greatPlace as staticGreatPlace } from "@/lib/content";
 import Reveal from "@/components/Reveal";
 import Counter from "@/components/Counter";
 
-export default function GreatPlace() {
+export default function GreatPlace({
+  data = staticGreatPlace,
+}: {
+  data?: typeof staticGreatPlace;
+}) {
+  const greatPlace = data;
   return (
     <section id="culture" className="section-light relative overflow-hidden py-24 sm:py-28">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_60%_at_100%_0%,rgba(34,155,241,0.12),transparent_60%)]" />

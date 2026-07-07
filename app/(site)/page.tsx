@@ -11,37 +11,55 @@ import Careers from "@/components/sections/Careers";
 import Contact from "@/components/sections/Contact";
 import ScrollDecor from "@/components/ScrollDecor";
 import SectionNav from "@/components/SectionNav";
-import { getTestimonials, getSiteContent } from "@/lib/data";
+import { getTestimonials, getSiteContent, getBusinessUnits } from "@/lib/data";
 
 // Admin edits call revalidatePath for instant updates; this is a backstop so
 // changes made directly in Supabase appear within a minute.
 export const revalidate = 60;
 
 export default async function Home() {
-  const [testimonials, hero, meaningfulLives, strategy, contact, company] =
-    await Promise.all([
-      getTestimonials(),
-      getSiteContent("hero"),
-      getSiteContent("meaningfulLives"),
-      getSiteContent("strategy"),
-      getSiteContent("contact"),
-      getSiteContent("company"),
-    ]);
+  const [
+    testimonials,
+    businessUnits,
+    hero,
+    meaningfulLives,
+    strategy,
+    eos,
+    coreValues,
+    journey,
+    greatPlace,
+    careers,
+    contact,
+    company,
+  ] = await Promise.all([
+    getTestimonials(),
+    getBusinessUnits(),
+    getSiteContent("hero"),
+    getSiteContent("meaningfulLives"),
+    getSiteContent("strategy"),
+    getSiteContent("eos"),
+    getSiteContent("coreValues"),
+    getSiteContent("journey"),
+    getSiteContent("greatPlace"),
+    getSiteContent("careers"),
+    getSiteContent("contact"),
+    getSiteContent("company"),
+  ]);
 
   return (
     <>
       <ScrollDecor />
       <SectionNav />
       <Hero data={hero} />
-      <BusinessUnits />
+      <BusinessUnits units={businessUnits} />
       <MeaningfulLives data={meaningfulLives} />
-      <EOS />
+      <EOS data={eos} />
       <Strategy data={strategy} />
-      <CoreValues />
-      <Journey />
-      <GreatPlace />
+      <CoreValues items={coreValues} />
+      <Journey data={journey} />
+      <GreatPlace data={greatPlace} />
       <Testimonials items={testimonials} />
-      <Careers />
+      <Careers data={careers} />
       <Contact data={contact} company={company} />
     </>
   );

@@ -2,11 +2,20 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { investor } from "@/lib/content";
+import { investor as staticInvestor } from "@/lib/content";
 
-export default function RevenueChart() {
-  const data = investor.performance;
-  const max = Math.max(...data.map((d) => d.revenue));
+type Perf = { year: string | number; revenue: string | number };
+
+export default function RevenueChart({
+  data: rawData = staticInvestor.performance,
+}: {
+  data?: Perf[];
+}) {
+  const data = rawData.map((d) => ({
+    year: String(d.year),
+    revenue: Number(d.revenue) || 0,
+  }));
+  const max = Math.max(...data.map((d) => d.revenue), 1);
   const [active, setActive] = useState<number | null>(null);
 
   return (

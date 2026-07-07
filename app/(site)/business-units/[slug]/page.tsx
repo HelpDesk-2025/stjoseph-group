@@ -1,19 +1,26 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { businessUnits } from "@/lib/content";
+import {
+  getBusinessUnit,
+  getBusinessUnits,
+  getAllBusinessUnitSlugs,
+} from "@/lib/data";
 import UnitHero from "@/components/UnitHero";
 import UnitBody from "@/components/UnitBody";
 
-export function generateStaticParams() {
-  return businessUnits.map((u) => ({ slug: u.slug }));
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const slugs = await getAllBusinessUnitSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
   params: { slug: string };
-}): Metadata {
-  const unit = businessUnits.find((u) => u.slug === params.slug);
+}): Promise<Metadata> {
+  const unit = await getBusinessUnit(params.slug);
   if (!unit) return { title: "Business Unit" };
   return {
     title: unit.name,
@@ -21,16 +28,20 @@ export function generateMetadata({
   };
 }
 
-export default function BusinessUnitPage({
+export default async function BusinessUnitPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  const unit = businessUnits.find((u) => u.slug === params.slug);
+  const unit = await getBusinessUnit(params.slug);
   if (!unit) notFound();
 
-  const index = businessUnits.findIndex((u) => u.slug === unit.slug);
-  const related = businessUnits.filter((u) => u.slug !== unit.slug).slice(0, 3);
+  const all = await getBusinessUnits();
+  const index = Math.max(
+    0,
+    all.findIndex((u) => u.slug === unit.slug)
+  );
+  const related = all.filter((u) => u.slug !== unit.slug).slice(0, 3);
 
   return (
     <>

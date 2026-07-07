@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { eos } from "@/lib/content";
+import { eos as staticEos } from "@/lib/content";
 import SectionHeader from "@/components/SectionHeader";
 import Reveal from "@/components/Reveal";
 
-export default function EOS() {
+export default function EOS({ data = staticEos }: { data?: typeof staticEos }) {
+  const eos = data;
   const [active, setActive] = useState(0);
   const n = eos.components.length;
 

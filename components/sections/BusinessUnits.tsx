@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { businessUnits } from "@/lib/content";
+import { businessUnits as staticBusinessUnits, type BusinessUnit } from "@/lib/content";
 import Reveal from "@/components/Reveal";
 import { UnitIcon, ArrowIcon } from "@/components/Icons";
 
@@ -63,7 +63,12 @@ const UNIT_GALLERY: Record<string, string[]> = {
   ],
 };
 
-export default function BusinessUnits() {
+export default function BusinessUnits({
+  units = staticBusinessUnits,
+}: {
+  units?: BusinessUnit[];
+}) {
+  const businessUnits = units;
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);

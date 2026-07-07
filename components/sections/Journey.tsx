@@ -2,11 +2,16 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { journey } from "@/lib/content";
+import { journey as staticJourney } from "@/lib/content";
 import SectionHeader from "@/components/SectionHeader";
 import Reveal from "@/components/Reveal";
 
-export default function Journey() {
+export default function Journey({
+  data = staticJourney,
+}: {
+  data?: typeof staticJourney;
+}) {
+  const journey = data;
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,

@@ -1,10 +1,15 @@
 "use client";
 
-import { careers } from "@/lib/content";
+import { careers as staticCareers } from "@/lib/content";
 import Reveal from "@/components/Reveal";
 import { CheckIcon, ArrowIcon } from "@/components/Icons";
 
-export default function Careers() {
+export default function Careers({
+  data = staticCareers,
+}: {
+  data?: typeof staticCareers;
+}) {
+  const careers = data;
   return (
     <section id="careers" className="section-light relative border-y border-white/10 bg-navy-900/40 py-24 sm:py-28">
       <div className="container-x lg:!pl-48">

@@ -1,8 +1,10 @@
 /**
  * Declarative schemas that drive the generic content editor. Each key maps to
  * a `site_content` row; the field tree mirrors the shape exported from
- * `lib/content.ts`. Add a section here (Phase 2) to make it editable — no new
- * page needed.
+ * `lib/content.ts`. Add a section here to make it editable — no new page needed.
+ *
+ * Most sections are objects (use `fields`). A few (coreValues, nav) are stored
+ * as a bare array — those use `rootList` instead.
  */
 
 export type Field =
@@ -16,7 +18,14 @@ export type SectionSchema = {
   key: string;
   title: string;
   description?: string;
-  fields: Field[];
+  /** For object-shaped sections. */
+  fields?: Field[];
+  /** For sections whose stored data is a bare array. */
+  rootList?: {
+    kind: "objectlist" | "stringlist";
+    itemLabel: string;
+    fields?: Field[];
+  };
 };
 
 const cta = (name: string, label: string): Field => ({
@@ -126,29 +135,207 @@ export const sectionSchemas: Record<string, SectionSchema> = {
       },
     ],
   },
-  contact: {
-    key: "contact",
-    title: "Contact section",
-    description: "Heading and contact channels on the home page.",
+  eos: {
+    key: "eos",
+    title: "EOS section",
+    description: "The operating-system section with its six components.",
+    fields: [
+      { name: "eyebrow", label: "Eyebrow", kind: "text" },
+      { name: "title", label: "Title", kind: "text" },
+      { name: "intro", label: "Intro", kind: "textarea" },
+      {
+        name: "components",
+        label: "Components",
+        kind: "objectlist",
+        itemLabel: "Component",
+        fields: [
+          { name: "key", label: "Key (id)", kind: "text" },
+          { name: "title", label: "Title", kind: "text" },
+          { name: "desc", label: "Description", kind: "textarea" },
+        ],
+      },
+    ],
+  },
+  journey: {
+    key: "journey",
+    title: "Journey / timeline",
+    fields: [
+      { name: "eyebrow", label: "Eyebrow", kind: "text" },
+      { name: "title", label: "Title", kind: "text" },
+      {
+        name: "milestones",
+        label: "Milestones",
+        kind: "objectlist",
+        itemLabel: "Milestone",
+        fields: [
+          { name: "year", label: "Year", kind: "text" },
+          { name: "title", label: "Title", kind: "text" },
+          { name: "desc", label: "Description", kind: "textarea" },
+        ],
+      },
+    ],
+  },
+  greatPlace: {
+    key: "greatPlace",
+    title: "Great place to work",
     fields: [
       { name: "eyebrow", label: "Eyebrow", kind: "text" },
       { name: "title", label: "Title", kind: "text" },
       { name: "body", label: "Body", kind: "textarea" },
       {
-        name: "channels",
-        label: "Channels",
+        name: "stats",
+        label: "Stats",
         kind: "objectlist",
-        itemLabel: "Channel",
+        itemLabel: "Stat",
         fields: [
+          { name: "value", label: "Value", kind: "text" },
           { name: "label", label: "Label", kind: "text" },
-          { name: "value", label: "Email / value", kind: "text" },
+        ],
+      },
+      { name: "badges", label: "Badges", kind: "stringlist" },
+    ],
+  },
+  careers: {
+    key: "careers",
+    title: "Careers",
+    fields: [
+      { name: "eyebrow", label: "Eyebrow", kind: "text" },
+      { name: "title", label: "Title", kind: "text" },
+      { name: "body", label: "Body", kind: "textarea" },
+      { name: "perks", label: "Perks", kind: "stringlist" },
+      {
+        name: "openings",
+        label: "Openings",
+        kind: "objectlist",
+        itemLabel: "Opening",
+        fields: [
+          { name: "role", label: "Role", kind: "text" },
+          { name: "unit", label: "Business unit", kind: "text" },
+          { name: "location", label: "Location", kind: "text" },
+          { name: "type", label: "Type", kind: "text" },
+        ],
+      },
+      cta("cta", "Call to action"),
+    ],
+  },
+  investor: {
+    key: "investor",
+    title: "Investor relations",
+    description: "The /investor-relations page.",
+    fields: [
+      { name: "eyebrow", label: "Eyebrow", kind: "text" },
+      { name: "title", label: "Title", kind: "text" },
+      { name: "intro", label: "Intro", kind: "textarea" },
+      {
+        name: "metrics",
+        label: "Metrics",
+        kind: "objectlist",
+        itemLabel: "Metric",
+        fields: [
+          { name: "value", label: "Value", kind: "text" },
+          { name: "label", label: "Label", kind: "text" },
+          { name: "note", label: "Note", kind: "text" },
+        ],
+      },
+      {
+        name: "performance",
+        label: "Performance (revenue chart)",
+        kind: "objectlist",
+        itemLabel: "Year",
+        fields: [
+          { name: "year", label: "Year", kind: "text" },
+          { name: "revenue", label: "Revenue (number)", kind: "text" },
+        ],
+      },
+      {
+        name: "governance",
+        label: "Governance",
+        kind: "objectlist",
+        itemLabel: "Item",
+        fields: [
+          { name: "title", label: "Title", kind: "text" },
+          { name: "desc", label: "Description", kind: "textarea" },
+        ],
+      },
+      {
+        name: "reports",
+        label: "Reports",
+        kind: "objectlist",
+        itemLabel: "Report",
+        fields: [
+          { name: "title", label: "Title", kind: "text" },
+          { name: "type", label: "Type", kind: "text" },
+          { name: "size", label: "Size", kind: "text" },
+        ],
+      },
+      {
+        name: "contact",
+        label: "IR contact",
+        kind: "group",
+        fields: [
+          { name: "name", label: "Name", kind: "text" },
+          { name: "email", label: "Email", kind: "text" },
+          { name: "phone", label: "Phone", kind: "text" },
         ],
       },
     ],
   },
+  coreValues: {
+    key: "coreValues",
+    title: "Core values",
+    rootList: {
+      kind: "objectlist",
+      itemLabel: "Value",
+      fields: [
+        { name: "num", label: "Number", kind: "text" },
+        { name: "title", label: "Title", kind: "text" },
+        { name: "desc", label: "Description", kind: "textarea" },
+      ],
+    },
+  },
+  nav: {
+    key: "nav",
+    title: "Navigation",
+    description: "Header navigation links.",
+    rootList: {
+      kind: "objectlist",
+      itemLabel: "Link",
+      fields: [
+        { name: "label", label: "Label", kind: "text" },
+        { name: "href", label: "Link (href)", kind: "text" },
+      ],
+    },
+  },
 };
 
-/** Sections shown on the dashboard. `available` = editable in this build. */
+/** Schema for editing a single business unit (saved via saveBusinessUnit). */
+export const businessUnitSchema: SectionSchema = {
+  key: "businessUnit",
+  title: "Business unit",
+  fields: [
+    { name: "name", label: "Name", kind: "text" },
+    { name: "short", label: "Short name", kind: "text" },
+    { name: "sector", label: "Sector", kind: "text" },
+    { name: "tagline", label: "Tagline", kind: "text" },
+    { name: "summary", label: "Summary", kind: "textarea" },
+    { name: "description", label: "Description", kind: "textarea" },
+    { name: "accent", label: "Accent colour (hex)", kind: "text" },
+    { name: "founded", label: "Founded", kind: "text" },
+    {
+      name: "highlights",
+      label: "Highlights",
+      kind: "objectlist",
+      itemLabel: "Highlight",
+      fields: [
+        { name: "label", label: "Label", kind: "text" },
+        { name: "value", label: "Value", kind: "text" },
+      ],
+    },
+    { name: "services", label: "Services", kind: "stringlist" },
+  ],
+};
+
+/** Sections shown on the dashboard. `available` = editable via the generic editor. */
 export const DASHBOARD_SECTIONS: {
   key: string;
   title: string;
@@ -159,14 +346,18 @@ export const DASHBOARD_SECTIONS: {
   { key: "hero", title: "Hero section", href: "/admin/content/hero", available: true },
   { key: "meaningfulLives", title: "Purpose section", href: "/admin/content/meaningfulLives", available: true },
   { key: "strategy", title: "Strategy section", href: "/admin/content/strategy", available: true },
+  { key: "eos", title: "EOS section", href: "/admin/content/eos", available: true },
+  { key: "coreValues", title: "Core values", href: "/admin/content/coreValues", available: true },
+  { key: "journey", title: "Journey / timeline", href: "/admin/content/journey", available: true },
+  { key: "greatPlace", title: "Great place to work", href: "/admin/content/greatPlace", available: true },
+  { key: "careers", title: "Careers", href: "/admin/content/careers", available: true },
+  { key: "investor", title: "Investor relations", href: "/admin/content/investor", available: true },
   { key: "contact", title: "Contact section", href: "/admin/content/contact", available: true },
-  { key: "eos", title: "EOS section", available: false },
-  { key: "coreValues", title: "Core values", available: false },
-  { key: "journey", title: "Journey / timeline", available: false },
-  { key: "greatPlace", title: "Great place to work", available: false },
-  { key: "careers", title: "Careers", available: false },
-  { key: "investor", title: "Investor relations", available: false },
-  { key: "nav", title: "Navigation", available: false },
-  { key: "businessUnits", title: "Business units", available: false },
-  { key: "testimonials", title: "Testimonials", available: false },
+  { key: "nav", title: "Navigation", href: "/admin/content/nav", available: true },
+];
+
+/** Collections that have their own dedicated editors (not site_content). */
+export const COLLECTION_SECTIONS: { title: string; href: string; description: string }[] = [
+  { title: "Business units", href: "/admin/business-units", description: "9 units · reorder, edit, publish" },
+  { title: "Testimonials", href: "/admin/testimonials", description: "Quotes shown on the home page" },
 ];
