@@ -3,8 +3,8 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import type { BusinessUnit } from "@/lib/content";
-import { UnitIcon } from "@/components/Icons";
+import type { BusinessUnit, UnitMedia } from "@/lib/content";
+import UnitLogo from "@/components/UnitLogo";
 
 const UnitScene = dynamic(() => import("@/components/three/UnitScene"), {
   ssr: false,
@@ -14,7 +14,7 @@ export default function UnitHero({
   unit,
   index,
 }: {
-  unit: BusinessUnit;
+  unit: BusinessUnit & UnitMedia;
   index: number;
 }) {
   return (
@@ -51,10 +51,10 @@ export default function UnitHero({
 
           <div className="flex items-center gap-4">
             <span
-              className="grid h-14 w-14 place-items-center rounded-xl border border-white/15"
+              className="grid h-14 w-14 place-items-center overflow-hidden rounded-xl border border-white/15"
               style={{ color: unit.accent, background: `${unit.accent}1a` }}
             >
-              <UnitIcon slug={unit.slug} className="h-7 w-7" />
+              <UnitLogo logo={unit.logo} slug={unit.slug} name={unit.name} className="h-7 w-7" />
             </span>
             <div>
               <span

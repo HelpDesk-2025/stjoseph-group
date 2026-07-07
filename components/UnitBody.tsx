@@ -1,18 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import type { BusinessUnit } from "@/lib/content";
+import type { BusinessUnit, UnitMedia } from "@/lib/content";
 import Reveal from "@/components/Reveal";
 import Counter from "@/components/Counter";
 import TiltCard from "@/components/TiltCard";
-import { UnitIcon, CheckIcon, ArrowIcon } from "@/components/Icons";
+import { CheckIcon, ArrowIcon } from "@/components/Icons";
+import UnitLogo from "@/components/UnitLogo";
 
 export default function UnitBody({
   unit,
   related,
 }: {
-  unit: BusinessUnit;
-  related: BusinessUnit[];
+  unit: BusinessUnit & UnitMedia;
+  related: (BusinessUnit & UnitMedia)[];
 }) {
   return (
     <>
@@ -136,10 +137,10 @@ export default function UnitBody({
                     className="relative flex h-full flex-col overflow-hidden rounded-card border border-white/10 bg-navy-800/50 p-6 transition-colors hover:border-white/25"
                   >
                     <span
-                      className="grid h-11 w-11 place-items-center rounded-xl border border-white/10"
+                      className="grid h-11 w-11 place-items-center overflow-hidden rounded-xl border border-white/10"
                       style={{ color: r.accent, background: `${r.accent}1a` }}
                     >
-                      <UnitIcon slug={r.slug} className="h-5 w-5" />
+                      <UnitLogo logo={r.logo} slug={r.slug} name={r.name} className="h-5 w-5" />
                     </span>
                     <h3 className="mt-5 font-sans text-base font-semibold text-white">
                       {r.name}

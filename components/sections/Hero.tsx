@@ -3,7 +3,12 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { hero as staticHero } from "@/lib/content";
+import {
+  hero as staticHero,
+  businessUnits as staticBusinessUnits,
+  type BusinessUnit,
+  type UnitMedia,
+} from "@/lib/content";
 import LogoMarquee from "@/components/sections/LogoMarquee";
 
 const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
@@ -24,7 +29,13 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
-export default function Hero({ data = staticHero }: { data?: typeof staticHero }) {
+export default function Hero({
+  data = staticHero,
+  units = staticBusinessUnits,
+}: {
+  data?: typeof staticHero;
+  units?: (BusinessUnit & UnitMedia)[];
+}) {
   const hero = data;
   return (
     <section id="hero" className="relative min-h-[100svh] w-full overflow-hidden">
@@ -102,7 +113,7 @@ export default function Hero({ data = staticHero }: { data?: typeof staticHero }
 
           {/* business unit logos */}
           <motion.div variants={item} className="mt-8 max-w-2xl">
-            <LogoMarquee />
+            <LogoMarquee units={units} />
           </motion.div>
         </motion.div>
       </div>

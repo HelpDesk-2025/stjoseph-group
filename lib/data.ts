@@ -15,6 +15,7 @@ import {
   contact,
   nav,
   type BusinessUnit,
+  type UnitMedia,
 } from "@/lib/content";
 import { getServerSupabase } from "@/lib/supabase/server";
 
@@ -25,10 +26,7 @@ export type Testimonial = {
 };
 
 /** A business unit as served to pages, including CMS-managed imagery. */
-export type BusinessUnitWithImages = BusinessUnit & {
-  hero_image?: string | null;
-  gallery?: string[];
-};
+export type BusinessUnitWithImages = BusinessUnit & UnitMedia;
 
 /**
  * Content fetchers with graceful fallback: when Supabase is connected AND has
@@ -110,7 +108,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 /* ── Business units ────────────────────────────────────────────────────── */
 
 const BU_COLUMNS =
-  "slug, name, short, sector, tagline, summary, description, accent, founded, highlights, services, hero_image, gallery";
+  "slug, name, short, sector, tagline, summary, description, accent, founded, highlights, services, logo, hero_image, gallery";
 
 export async function getBusinessUnits(): Promise<BusinessUnitWithImages[]> {
   const supabase = getServerSupabase();

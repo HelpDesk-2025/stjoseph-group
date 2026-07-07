@@ -50,7 +50,7 @@ export default async function Home() {
     <>
       <ScrollDecor />
       <SectionNav />
-      <Hero data={hero} />
+      <Hero data={hero} units={businessUnits} />
       <BusinessUnits units={businessUnits} />
       <MeaningfulLives data={meaningfulLives} />
       <EOS data={eos} />

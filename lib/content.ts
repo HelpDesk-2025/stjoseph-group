@@ -56,6 +56,13 @@ export type BusinessUnit = {
   services: string[];
 };
 
+/** CMS-managed imagery attached to a business unit (all optional). */
+export type UnitMedia = {
+  logo?: string | null;
+  hero_image?: string | null;
+  gallery?: string[] | null;
+};
+
 export const businessUnits: BusinessUnit[] = [
   {
     slug: "realty-development",
