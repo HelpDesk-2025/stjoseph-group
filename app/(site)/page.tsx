@@ -13,6 +13,10 @@ import ScrollDecor from "@/components/ScrollDecor";
 import SectionNav from "@/components/SectionNav";
 import { getTestimonials, getSiteContent } from "@/lib/data";
 
+// Admin edits call revalidatePath for instant updates; this is a backstop so
+// changes made directly in Supabase appear within a minute.
+export const revalidate = 60;
+
 export default async function Home() {
   const [testimonials, hero, meaningfulLives, strategy, contact, company] =
     await Promise.all([
