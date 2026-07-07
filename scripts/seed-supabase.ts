@@ -26,6 +26,7 @@ import {
   contact,
   nav,
 } from "../lib/content";
+import { fallbackGallery } from "../lib/unit-gallery";
 
 // Minimal .env.local loader (avoids adding a dotenv dependency).
 try {
@@ -94,6 +95,8 @@ async function main() {
     founded: u.founded,
     highlights: u.highlights,
     services: u.services,
+    hero_image: null,
+    gallery: fallbackGallery(u.slug, 1200),
     sort_order: i,
     published: true,
     updated_at: new Date().toISOString(),

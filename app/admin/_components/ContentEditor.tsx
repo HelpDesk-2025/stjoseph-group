@@ -4,6 +4,8 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import type { Field, SectionSchema } from "@/app/admin/_lib/schemas";
 import { saveSiteContent } from "@/app/actions/admin/content";
+import ImageField from "@/app/admin/_components/ImageField";
+import GalleryField from "@/app/admin/_components/GalleryField";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -155,6 +157,24 @@ export default function ContentEditor({
           </div>
         );
       }
+      case "image":
+        return (
+          <ImageField
+            label={field.label}
+            value={value ?? ""}
+            folder={field.folder}
+            onChange={(url) => update(path, url)}
+          />
+        );
+      case "imagelist":
+        return (
+          <GalleryField
+            label={field.label}
+            value={Array.isArray(value) ? value : []}
+            folder={field.folder}
+            onChange={(urls) => update(path, urls)}
+          />
+        );
       case "objectlist": {
         const arr: any[] = Array.isArray(value) ? value : [];
         const move = (i: number, dir: -1 | 1) => {

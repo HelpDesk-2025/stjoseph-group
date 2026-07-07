@@ -12,7 +12,9 @@ export type Field =
   | { name: string; label: string; kind: "textarea" }
   | { name: string; label: string; kind: "group"; fields: Field[] }
   | { name: string; label: string; kind: "objectlist"; itemLabel: string; fields: Field[] }
-  | { name: string; label: string; kind: "stringlist" };
+  | { name: string; label: string; kind: "stringlist" }
+  | { name: string; label: string; kind: "image"; folder?: string }
+  | { name: string; label: string; kind: "imagelist"; folder?: string };
 
 export type SectionSchema = {
   key: string;
@@ -321,6 +323,8 @@ export const businessUnitSchema: SectionSchema = {
     { name: "description", label: "Description", kind: "textarea" },
     { name: "accent", label: "Accent colour (hex)", kind: "text" },
     { name: "founded", label: "Founded", kind: "text" },
+    { name: "hero_image", label: "Hero image", kind: "image", folder: "business-units" },
+    { name: "gallery", label: "Gallery images", kind: "imagelist", folder: "business-units" },
     {
       name: "highlights",
       label: "Highlights",

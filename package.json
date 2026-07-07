@@ -8,7 +8,8 @@
     "start": "next start -p 3200",
     "lint": "next lint",
     "seed": "tsx scripts/seed-supabase.ts",
-    "create-admin": "tsx scripts/create-admin.ts"
+    "create-admin": "tsx scripts/create-admin.ts",
+    "create-bucket": "tsx scripts/create-bucket.ts"
   },
   "dependencies": {
     "@react-three/drei": "9.114.3",
