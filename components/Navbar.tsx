@@ -3,10 +3,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { nav } from "@/lib/content";
+import { nav as staticNav, company as staticCompany } from "@/lib/content";
 import Logo from "./Logo";
 
-export default function Navbar() {
+export default function Navbar({
+  nav = staticNav,
+  company = staticCompany,
+}: {
+  nav?: typeof staticNav;
+  company?: typeof staticCompany;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -30,8 +36,8 @@ export default function Navbar() {
       }`}
     >
       <nav className="container-x flex h-16 items-center justify-between">
-        <Link href="/" aria-label="St. Joseph Group, Inc. home" className="shrink-0">
-          <Logo />
+        <Link href="/" aria-label={`${company.name} home`} className="shrink-0">
+          <Logo company={company} />
         </Link>
 
         {/* Desktop */}

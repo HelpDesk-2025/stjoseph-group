@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { hero } from "@/lib/content";
+import { hero as staticHero } from "@/lib/content";
 import LogoMarquee from "@/components/sections/LogoMarquee";
 
 const HeroScene = dynamic(() => import("@/components/three/HeroScene"), {
@@ -24,7 +24,8 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
-export default function Hero() {
+export default function Hero({ data = staticHero }: { data?: typeof staticHero }) {
+  const hero = data;
   return (
     <section id="hero" className="relative min-h-[100svh] w-full overflow-hidden">
       {/* 3D layer */}

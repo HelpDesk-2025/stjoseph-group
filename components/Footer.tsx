@@ -1,14 +1,24 @@
 import Link from "next/link";
-import { company, businessUnits } from "@/lib/content";
+import {
+  company as staticCompany,
+  businessUnits as staticBusinessUnits,
+  type BusinessUnit,
+} from "@/lib/content";
 import Logo from "./Logo";
 import NewsletterForm from "./NewsletterForm";
 
-export default function Footer() {
+export default function Footer({
+  company = staticCompany,
+  businessUnits = staticBusinessUnits,
+}: {
+  company?: typeof staticCompany;
+  businessUnits?: BusinessUnit[];
+}) {
   return (
     <footer className="relative border-t border-white/10 bg-navy">
       <div className="container-x grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div className="lg:col-span-1">
-          <Logo />
+          <Logo company={company} />
           <p className="body-text mt-5 max-w-xs">{company.intro}</p>
         </div>
 

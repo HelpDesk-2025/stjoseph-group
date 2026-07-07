@@ -7,11 +7,13 @@
     "build": "next build",
     "start": "next start -p 3200",
     "lint": "next lint",
-    "seed": "tsx scripts/seed-supabase.ts"
+    "seed": "tsx scripts/seed-supabase.ts",
+    "create-admin": "tsx scripts/create-admin.ts"
   },
   "dependencies": {
     "@react-three/drei": "9.114.3",
     "@react-three/fiber": "8.17.10",
+    "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.110.0",
     "framer-motion": "11.11.9",
     "lenis": "1.1.16",

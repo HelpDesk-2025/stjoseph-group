@@ -1,6 +1,12 @@
-import { company } from "@/lib/content";
+import { company as staticCompany } from "@/lib/content";
 
-export default function Logo({ className = "" }: { className?: string }) {
+export default function Logo({
+  className = "",
+  company = staticCompany,
+}: {
+  className?: string;
+  company?: typeof staticCompany;
+}) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <span className="relative grid h-9 w-9 place-items-center rounded-md bg-gradient-to-br from-amber to-amber-deep shadow-glow">

@@ -11,26 +11,34 @@ import Careers from "@/components/sections/Careers";
 import Contact from "@/components/sections/Contact";
 import ScrollDecor from "@/components/ScrollDecor";
 import SectionNav from "@/components/SectionNav";
-import { getTestimonials } from "@/lib/data";
+import { getTestimonials, getSiteContent } from "@/lib/data";
 
 export default async function Home() {
-  const testimonials = await getTestimonials();
+  const [testimonials, hero, meaningfulLives, strategy, contact, company] =
+    await Promise.all([
+      getTestimonials(),
+      getSiteContent("hero"),
+      getSiteContent("meaningfulLives"),
+      getSiteContent("strategy"),
+      getSiteContent("contact"),
+      getSiteContent("company"),
+    ]);
 
   return (
     <>
       <ScrollDecor />
       <SectionNav />
-      <Hero />
+      <Hero data={hero} />
       <BusinessUnits />
-      <MeaningfulLives />
+      <MeaningfulLives data={meaningfulLives} />
       <EOS />
-      <Strategy />
+      <Strategy data={strategy} />
       <CoreValues />
       <Journey />
       <GreatPlace />
       <Testimonials items={testimonials} />
       <Careers />
-      <Contact />
+      <Contact data={contact} company={company} />
     </>
   );
 }

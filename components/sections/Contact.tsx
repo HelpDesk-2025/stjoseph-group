@@ -1,13 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { contact, company } from "@/lib/content";
+import { contact as staticContact, company as staticCompany } from "@/lib/content";
 import { submitContact } from "@/app/actions/contact";
 import Reveal from "@/components/Reveal";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-export default function Contact() {
+export default function Contact({
+  data = staticContact,
+  company = staticCompany,
+}: {
+  data?: typeof staticContact;
+  company?: typeof staticCompany;
+}) {
+  const contact = data;
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);

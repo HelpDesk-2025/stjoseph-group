@@ -1,10 +1,14 @@
 "use client";
 
-import { strategy } from "@/lib/content";
+import { strategy as staticStrategy } from "@/lib/content";
 import Reveal from "@/components/Reveal";
 
-export default function Strategy() {
-  const { coreFocus, mission, vision } = strategy;
+export default function Strategy({
+  data = staticStrategy,
+}: {
+  data?: typeof staticStrategy;
+}) {
+  const { coreFocus, mission, vision } = data;
   return (
     <section id="strategy" className="relative py-24 sm:py-28">
       <div className="container-x lg:!pl-48">

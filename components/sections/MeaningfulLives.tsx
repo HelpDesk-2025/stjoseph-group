@@ -1,10 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { meaningfulLives } from "@/lib/content";
+import { meaningfulLives as staticMeaningfulLives } from "@/lib/content";
 import Reveal from "@/components/Reveal";
 
-export default function MeaningfulLives() {
+export default function MeaningfulLives({
+  data = staticMeaningfulLives,
+}: {
+  data?: typeof staticMeaningfulLives;
+}) {
+  const meaningfulLives = data;
   return (
     <section id="purpose" className="relative overflow-hidden py-24 sm:py-28">
       {/* animated aurora backdrop */}

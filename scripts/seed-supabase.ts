@@ -10,7 +10,22 @@
  */
 import { readFileSync } from "node:fs";
 import { createClient } from "@supabase/supabase-js";
-import { businessUnits, testimonials } from "../lib/content";
+import {
+  businessUnits,
+  testimonials,
+  company,
+  hero,
+  eos,
+  meaningfulLives,
+  strategy,
+  coreValues,
+  journey,
+  greatPlace,
+  careers,
+  investor,
+  contact,
+  nav,
+} from "../lib/content";
 
 // Minimal .env.local loader (avoids adding a dotenv dependency).
 try {
@@ -40,6 +55,32 @@ const supabase = createClient(url, key, {
 });
 
 async function main() {
+  // Singleton / structured sections → site_content (upsert by key).
+  const siteContent: Record<string, unknown> = {
+    company,
+    hero,
+    eos,
+    meaningfulLives,
+    strategy,
+    coreValues,
+    journey,
+    greatPlace,
+    careers,
+    investor,
+    contact,
+    nav,
+  };
+  const contentRows = Object.entries(siteContent).map(([key, data]) => ({
+    key,
+    data,
+    updated_at: new Date().toISOString(),
+  }));
+  const { error: scErr } = await supabase
+    .from("site_content")
+    .upsert(contentRows, { onConflict: "key" });
+  if (scErr) throw scErr;
+  console.log(`✓ Seeded ${contentRows.length} content sections`);
+
   // Business units — upsert by slug so edits re-sync without duplicating.
   const unitRows = businessUnits.map((u, i) => ({
     slug: u.slug,
