@@ -51,10 +51,10 @@ export default function UnitHero({
 
           <div className="flex items-center gap-4">
             <span
-              className="grid h-24 w-24 place-items-center overflow-hidden rounded-2xl border border-white/15"
-              style={{ color: unit.accent, background: `${unit.accent}1a` }}
+              className="grid h-32 w-32 place-items-center overflow-hidden rounded-2xl border border-white/15 bg-white p-4 shadow-lg"
+              style={{ color: unit.accent }}
             >
-              <UnitLogo logo={unit.page_logo} slug={unit.slug} name={unit.name} className="h-16 w-16" />
+              <UnitLogo logo={unit.page_logo} slug={unit.slug} name={unit.name} className="h-full w-full" />
             </span>
             <div>
               <span
