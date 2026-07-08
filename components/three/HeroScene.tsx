@@ -11,7 +11,10 @@ import {
   Html,
 } from "@react-three/drei";
 import * as THREE from "three";
-import { businessUnits } from "@/lib/content";
+import { businessUnits as staticBusinessUnits } from "@/lib/content";
+
+/** Minimal shape the solar system needs from a business unit. */
+export type SceneUnit = { slug: string; name: string; accent: string };
 
 /* Read the global scroll progress written by SmoothScroll (0..1). */
 function useScrollProgress() {
@@ -150,7 +153,7 @@ function Node({
 const SYSTEM_SCALE = 0.5;
 const SYSTEM_OFFSET: [number, number, number] = [2.55, 0, 0];
 
-function CoreSystem() {
+function CoreSystem({ units }: { units: SceneUnit[] }) {
   const tilt = useRef<THREE.Group>(null!);
   const group = useRef<THREE.Group>(null!);
   const inner = useRef<THREE.Mesh>(null!);
@@ -218,8 +221,8 @@ function CoreSystem() {
   });
 
   const rings = useMemo(() => {
-    // distribute 9 nodes across 3 orbital rings
-    return businessUnits.map((u, i) => {
+    // distribute the units across 3 orbital rings
+    return units.map((u, i) => {
       const ring = i % 3;
       return {
         slug: u.slug,
@@ -228,10 +231,10 @@ function CoreSystem() {
         radius: 2.4 + ring * 0.9,
         y: (ring - 1) * 0.7,
         speed: 0.3 - ring * 0.06,
-        offset: (i / businessUnits.length) * Math.PI * 2,
+        offset: (i / Math.max(1, units.length)) * Math.PI * 2,
       };
     });
-  }, []);
+  }, [units]);
 
   return (
     <group position={SYSTEM_OFFSET} scale={SYSTEM_SCALE}>
@@ -294,7 +297,11 @@ function CoreSystem() {
   );
 }
 
-export default function HeroScene() {
+export default function HeroScene({
+  units = staticBusinessUnits,
+}: {
+  units?: SceneUnit[];
+}) {
   return (
     <Canvas
       dpr={[1, 1.8]}
@@ -307,7 +314,7 @@ export default function HeroScene() {
       <pointLight position={[6, 6, 6]} intensity={120} color="#ffd9a0" />
       <pointLight position={[-8, -4, -6]} intensity={80} color="#229BF1" />
       <Starfield />
-      <CoreSystem />
+      <CoreSystem units={units} />
       <fog attach="fog" args={["#040410", 9, 22]} />
     </Canvas>
   );

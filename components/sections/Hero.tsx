@@ -41,7 +41,7 @@ export default function Hero({
     <section id="hero" className="relative min-h-[100svh] w-full overflow-hidden">
       {/* 3D layer */}
       <div className="absolute inset-0 z-0">
-        <HeroScene />
+        <HeroScene units={units} />
       </div>
 
       {/* gradient wash for legibility */}
