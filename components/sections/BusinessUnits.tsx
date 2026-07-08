@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { businessUnits as staticBusinessUnits, type BusinessUnit } from "@/lib/content";
 import { fallbackGallery } from "@/lib/unit-gallery";
 import Reveal from "@/components/Reveal";
+import ScrollDecorLight from "@/components/ScrollDecorLight";
 import { UnitIcon, ArrowIcon } from "@/components/Icons";
 
 const AUTO_PLAY_DURATION = 5000;
@@ -79,6 +80,8 @@ export default function BusinessUnits({
       className="relative overflow-hidden border-y border-black/[0.06] bg-[#f6f3ee] py-24 text-navy sm:py-28"
     >
       <div className="pointer-events-none absolute inset-0 grid-fade opacity-40 [background-image:linear-gradient(rgba(4,4,16,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(4,4,16,0.05)_1px,transparent_1px)] [background-size:60px_60px]" />
+
+      <ScrollDecorLight />
 
       <div className="container-x relative lg:!pl-48">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
