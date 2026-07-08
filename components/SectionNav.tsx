@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ui as staticUi } from "@/lib/content";
 
 // Only the sections between "Our Businesses" and "Careers" (inclusive).
 const SECTIONS = [
@@ -32,7 +33,14 @@ const LIGHT_SECTIONS = new Set([
  * while the viewport is within the Businesses → Careers range, tracks the
  * active section, and smooth-scrolls (via Lenis) when a label is clicked.
  */
-export default function SectionNav() {
+export default function SectionNav({
+  sections = staticUi.sectionNav,
+}: {
+  sections?: { id: string; label: string }[];
+}) {
+  const labelById: Record<string, string> = Object.fromEntries(
+    (sections ?? []).map((s) => [s.id, s.label])
+  );
   const [active, setActive] = useState(FIRST);
   const [visible, setVisible] = useState(false);
 
@@ -125,7 +133,7 @@ export default function SectionNav() {
                           : "text-ink-300 group-hover:text-white"
                     }`}
                   >
-                    {s.label}
+                    {labelById[s.id] ?? s.label}
                   </span>
                 </a>
               </li>

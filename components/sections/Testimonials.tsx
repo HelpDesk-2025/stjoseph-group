@@ -2,15 +2,17 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { testimonials as staticTestimonials } from "@/lib/content";
+import { testimonials as staticTestimonials, ui as staticUi } from "@/lib/content";
 import type { Testimonial } from "@/lib/data";
 import SectionHeader from "@/components/SectionHeader";
 import Reveal from "@/components/Reveal";
 
 export default function Testimonials({
   items = staticTestimonials,
+  header = staticUi.testimonials,
 }: {
   items?: Testimonial[];
+  header?: typeof staticUi.testimonials;
 }) {
   const testimonials = items;
   const [i, setI] = useState(0);
@@ -26,8 +28,8 @@ export default function Testimonials({
     <section id="testimonials" className="relative py-24 sm:py-28">
       <div className="container-x lg:!pl-48">
         <SectionHeader
-          eyebrow="In Their Words"
-          title="Voices from across the group"
+          eyebrow={header.eyebrow}
+          title={header.title}
           center
         />
 

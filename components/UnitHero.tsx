@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import type { BusinessUnit, UnitMedia } from "@/lib/content";
+import { ui as staticUi, type BusinessUnit, type UnitMedia } from "@/lib/content";
 import UnitLogo from "@/components/UnitLogo";
 
 const UnitScene = dynamic(() => import("@/components/three/UnitScene"), {
@@ -13,9 +13,11 @@ const UnitScene = dynamic(() => import("@/components/three/UnitScene"), {
 export default function UnitHero({
   unit,
   index,
+  labels = staticUi.unit,
 }: {
   unit: BusinessUnit & UnitMedia;
   index: number;
+  labels?: typeof staticUi.unit;
 }) {
   return (
     <section className="relative min-h-[85svh] overflow-hidden pt-16">
@@ -78,10 +80,10 @@ export default function UnitHero({
 
           <div className="mt-9 flex flex-wrap gap-4">
             <Link href="/#contact" className="btn-primary">
-              Partner with us
+              {labels.partnerCta}
             </Link>
             <Link href="/#business-units" className="btn-ghost">
-              All businesses
+              {labels.allBusinessesCta}
             </Link>
           </div>
         </motion.div>

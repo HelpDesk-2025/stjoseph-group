@@ -31,6 +31,7 @@ export default async function Home() {
     careers,
     contact,
     company,
+    ui,
   ] = await Promise.all([
     getTestimonials(),
     getBusinessUnits(),
@@ -44,21 +45,22 @@ export default async function Home() {
     getSiteContent("careers"),
     getSiteContent("contact"),
     getSiteContent("company"),
+    getSiteContent("ui"),
   ]);
 
   return (
     <>
       <ScrollDecor />
-      <SectionNav />
+      <SectionNav sections={ui.sectionNav} />
       <Hero data={hero} units={businessUnits} />
       <BusinessUnits units={businessUnits} />
       <MeaningfulLives data={meaningfulLives} />
       <EOS data={eos} />
       <Strategy data={strategy} />
-      <CoreValues items={coreValues} />
+      <CoreValues items={coreValues} header={ui.coreValues} />
       <Journey data={journey} />
       <GreatPlace data={greatPlace} />
-      <Testimonials items={testimonials} />
+      <Testimonials items={testimonials} header={ui.testimonials} />
       <Careers data={careers} />
       <Contact data={contact} company={company} />
     </>

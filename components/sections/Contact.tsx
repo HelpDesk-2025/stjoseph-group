@@ -99,10 +99,10 @@ export default function Contact({
                     </svg>
                   </span>
                   <h3 className="mt-6 font-sans text-2xl font-semibold text-white">
-                    Message received
+                    {contact.successTitle}
                   </h3>
                   <p className="mt-3 max-w-xs font-mono text-[13px] text-ink-200">
-                    Thank you for reaching out. Our team will get back to you shortly.
+                    {contact.successBody}
                   </p>
                   <button
                     onClick={() => setStatus("idle")}

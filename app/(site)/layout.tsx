@@ -8,17 +8,22 @@ export default async function SiteLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [nav, company, businessUnits] = await Promise.all([
+  const [nav, company, businessUnits, ui] = await Promise.all([
     getSiteContent("nav"),
     getSiteContent("company"),
     getBusinessUnits(),
+    getSiteContent("ui"),
   ]);
 
   return (
     <SmoothScroll>
-      <Navbar nav={nav} company={company} />
+      <Navbar nav={nav} company={company} navCta={ui.navCta} />
       <main>{children}</main>
-      <Footer company={company} businessUnits={businessUnits} />
+      <Footer
+        company={company}
+        businessUnits={businessUnits}
+        newsletter={ui.newsletter}
+      />
     </SmoothScroll>
   );
 }

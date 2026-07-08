@@ -8,8 +8,14 @@ type Perf = { year: string | number; revenue: string | number };
 
 export default function RevenueChart({
   data: rawData = staticInvestor.performance,
+  title = staticInvestor.chartTitle,
+  subtitle = staticInvestor.chartSubtitle,
+  note = staticInvestor.chartNote,
 }: {
   data?: Perf[];
+  title?: string;
+  subtitle?: string;
+  note?: string;
 }) {
   const data = rawData.map((d) => ({
     year: String(d.year),
@@ -23,13 +29,13 @@ export default function RevenueChart({
       <div className="flex items-baseline justify-between">
         <div>
           <h3 className="font-sans text-lg font-semibold text-white">
-            Group Revenue
+            {title}
           </h3>
           <p className="mt-1 font-mono text-[11px] text-ink-300">
-            in ₱ Billions · FY2020–FY2024
+            {subtitle}
           </p>
         </div>
-        <span className="font-mono text-[11px] text-cyan">+62% over 5 years</span>
+        <span className="font-mono text-[11px] text-cyan">{note}</span>
       </div>
 
       <div className="mt-10 flex h-64 items-end justify-between gap-3 sm:gap-6">

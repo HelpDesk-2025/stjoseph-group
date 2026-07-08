@@ -4,6 +4,7 @@ import {
   getBusinessUnit,
   getBusinessUnits,
   getAllBusinessUnitSlugs,
+  getSiteContent,
 } from "@/lib/data";
 import UnitHero from "@/components/UnitHero";
 import UnitBody from "@/components/UnitBody";
@@ -36,7 +37,11 @@ export default async function BusinessUnitPage({
   const unit = await getBusinessUnit(params.slug);
   if (!unit) notFound();
 
-  const all = await getBusinessUnits();
+  const [all, ui, company] = await Promise.all([
+    getBusinessUnits(),
+    getSiteContent("ui"),
+    getSiteContent("company"),
+  ]);
   const index = Math.max(
     0,
     all.findIndex((u) => u.slug === unit.slug)
@@ -45,8 +50,13 @@ export default async function BusinessUnitPage({
 
   return (
     <>
-      <UnitHero unit={unit} index={index} />
-      <UnitBody unit={unit} related={related} />
+      <UnitHero unit={unit} index={index} labels={ui.unit} />
+      <UnitBody
+        unit={unit}
+        related={related}
+        labels={ui.unit}
+        groupName={company.name}
+      />
     </>
   );
 }

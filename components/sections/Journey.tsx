@@ -25,7 +25,7 @@ export default function Journey({
         <SectionHeader
           eyebrow={journey.eyebrow}
           title={journey.title}
-          intro="From a single enterprise to a diversified group of nine — a story of disciplined growth and enduring purpose."
+          intro={journey.intro}
         />
 
         <div ref={ref} className="relative mt-16 pl-8 sm:pl-0">

@@ -121,7 +121,7 @@ export default function Hero({
       {/* scroll hint */}
       <div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2">
         <div className="flex flex-col items-center gap-2 text-ink-300">
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em]">{hero.scrollHint}</span>
           <span className="flex h-9 w-5 justify-center rounded-full border border-white/25 pt-1.5">
             <span className="h-2 w-1 animate-bounce rounded-full bg-amber" />
           </span>

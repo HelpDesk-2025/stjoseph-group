@@ -70,24 +70,26 @@ export default async function InvestorRelationsPage() {
       <section className="relative py-16">
         <div className="container-x grid items-center gap-10 lg:grid-cols-[1.3fr_1fr]">
           <Reveal>
-            <RevenueChart data={investor.performance} />
+            <RevenueChart
+              data={investor.performance}
+              title={investor.chartTitle}
+              subtitle={investor.chartSubtitle}
+              note={investor.chartNote}
+            />
           </Reveal>
           <Reveal delay={0.1}>
             <div>
-              <span className="eyebrow">Financial Performance</span>
+              <span className="eyebrow">{investor.performanceEyebrow}</span>
               <h2 className="mt-4 heading-lg text-white">
-                Consistent, disciplined growth
+                {investor.performanceTitle}
               </h2>
               <p className="mt-5 font-mono text-sm leading-relaxed text-ink-200">
-                Over the past five years, St. Joseph Group, Inc. has delivered steady
-                revenue expansion across its diversified portfolio — driven by
-                operational discipline, prudent capital allocation, and a
-                relentless focus on long-term value creation.
+                {investor.performanceBody}
               </p>
               <ul className="mt-6 space-y-2 font-mono text-[13px] text-ink-100">
-                <li>· Diversification lowers concentration risk</li>
-                <li>· EOS®-driven accountability across all units</li>
-                <li>· Investment-grade balance sheet</li>
+                {investor.performancePoints.map((p) => (
+                  <li key={p}>· {p}</li>
+                ))}
               </ul>
             </div>
           </Reveal>
@@ -98,9 +100,9 @@ export default async function InvestorRelationsPage() {
       <section className="relative border-y border-white/10 bg-navy-900/40 py-20">
         <div className="container-x">
           <Reveal>
-            <span className="eyebrow">Governance &amp; Stewardship</span>
+            <span className="eyebrow">{investor.governanceEyebrow}</span>
             <h2 className="mt-4 heading-lg text-white">
-              Built on trust and accountability
+              {investor.governanceTitle}
             </h2>
           </Reveal>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -128,11 +130,10 @@ export default async function InvestorRelationsPage() {
         <div className="container-x grid gap-12 lg:grid-cols-[1fr_1.3fr]">
           <div>
             <Reveal>
-              <span className="eyebrow">Reports &amp; Filings</span>
-              <h2 className="mt-4 heading-lg text-white">Download center</h2>
+              <span className="eyebrow">{investor.reportsEyebrow}</span>
+              <h2 className="mt-4 heading-lg text-white">{investor.reportsTitle}</h2>
               <p className="mt-5 max-w-sm font-mono text-sm leading-relaxed text-ink-200">
-                Access our latest financial results, annual reports, and governance
-                documents. (Placeholder links — connect to your document store.)
+                {investor.reportsBody}
               </p>
             </Reveal>
           </div>
@@ -182,8 +183,7 @@ export default async function InvestorRelationsPage() {
                     {investor.contact.name}
                   </h2>
                   <p className="mt-4 font-mono text-sm text-ink-200">
-                    For investor inquiries, financial information, and partnership
-                    opportunities.
+                    {investor.contactBody}
                   </p>
                 </div>
                 <div className="space-y-4">

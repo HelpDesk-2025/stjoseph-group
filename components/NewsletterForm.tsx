@@ -5,8 +5,10 @@ import { subscribe } from "@/app/actions/subscribe";
 
 export default function NewsletterForm({
   source = "footer",
+  successMessage = "Thanks — you're subscribed.",
 }: {
   source?: string;
+  successMessage?: string;
 }) {
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">(
     "idle"
@@ -31,9 +33,7 @@ export default function NewsletterForm({
 
   if (status === "done") {
     return (
-      <p className="font-mono text-[13px] text-cyan">
-        Thanks — you&rsquo;re subscribed.
-      </p>
+      <p className="font-mono text-[13px] text-cyan">{successMessage}</p>
     );
   }
 

@@ -1,22 +1,24 @@
 "use client";
 
-import { coreValues as staticCoreValues } from "@/lib/content";
+import { coreValues as staticCoreValues, ui as staticUi } from "@/lib/content";
 import SectionHeader from "@/components/SectionHeader";
 import Reveal from "@/components/Reveal";
 
 export default function CoreValues({
   items = staticCoreValues,
+  header = staticUi.coreValues,
 }: {
   items?: typeof staticCoreValues;
+  header?: typeof staticUi.coreValues;
 }) {
   const coreValues = items;
   return (
     <section id="values" className="section-light relative border-y border-white/10 bg-navy-900/40 py-24 sm:py-28">
       <div className="container-x lg:!pl-48">
         <SectionHeader
-          eyebrow="What We Stand For"
-          title="Our 5 Core Values"
-          intro="The non-negotiables that define who we are and how we work — across every business unit and every decision."
+          eyebrow={header.eyebrow}
+          title={header.title}
+          intro={header.intro}
           center
         />
 

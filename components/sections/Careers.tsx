@@ -44,7 +44,7 @@ export default function Careers({
             <Reveal>
               <div className="mb-4 flex items-center justify-between">
                 <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-ink-300">
-                  Featured Openings
+                  {careers.openingsLabel}
                 </h3>
                 <a href={careers.cta.href} className="inline-flex items-center gap-1.5 font-mono text-xs text-cyan hover:text-cyan-light">
                   {careers.cta.label}

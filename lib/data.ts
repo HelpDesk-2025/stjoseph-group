@@ -14,6 +14,7 @@ import {
   investor,
   contact,
   nav,
+  ui,
   type BusinessUnit,
   type UnitMedia,
 } from "@/lib/content";
@@ -50,6 +51,7 @@ const staticByKey = {
   investor,
   contact,
   nav,
+  ui,
 } as const;
 
 export const SITE_CONTENT_KEYS = Object.keys(staticByKey) as SiteContentKey[];

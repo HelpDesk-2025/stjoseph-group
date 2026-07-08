@@ -83,6 +83,7 @@ export const sectionSchemas: Record<string, SectionSchema> = {
           { name: "label", label: "Label", kind: "text" },
         ],
       },
+      { name: "scrollHint", label: "Scroll hint", kind: "text" },
     ],
   },
   meaningfulLives: {
@@ -167,6 +168,7 @@ export const sectionSchemas: Record<string, SectionSchema> = {
     fields: [
       { name: "eyebrow", label: "Eyebrow", kind: "text" },
       { name: "title", label: "Title", kind: "text" },
+      { name: "intro", label: "Intro", kind: "textarea" },
       {
         name: "milestones",
         label: "Milestones",
@@ -207,6 +209,7 @@ export const sectionSchemas: Record<string, SectionSchema> = {
       { name: "eyebrow", label: "Eyebrow", kind: "text" },
       { name: "title", label: "Title", kind: "text" },
       { name: "body", label: "Body", kind: "textarea" },
+      { name: "openingsLabel", label: "Openings heading", kind: "text" },
       { name: "perks", label: "Perks", kind: "stringlist" },
       {
         name: "openings",
@@ -283,6 +286,19 @@ export const sectionSchemas: Record<string, SectionSchema> = {
           { name: "phone", label: "Phone", kind: "text" },
         ],
       },
+      { name: "contactBody", label: "IR contact blurb", kind: "textarea" },
+      { name: "performanceEyebrow", label: "Performance eyebrow", kind: "text" },
+      { name: "performanceTitle", label: "Performance title", kind: "text" },
+      { name: "performanceBody", label: "Performance body", kind: "textarea" },
+      { name: "performancePoints", label: "Performance bullets", kind: "stringlist" },
+      { name: "governanceEyebrow", label: "Governance eyebrow", kind: "text" },
+      { name: "governanceTitle", label: "Governance title", kind: "text" },
+      { name: "reportsEyebrow", label: "Reports eyebrow", kind: "text" },
+      { name: "reportsTitle", label: "Reports title", kind: "text" },
+      { name: "reportsBody", label: "Reports body", kind: "textarea" },
+      { name: "chartTitle", label: "Chart title", kind: "text" },
+      { name: "chartSubtitle", label: "Chart subtitle", kind: "text" },
+      { name: "chartNote", label: "Chart note", kind: "text" },
     ],
   },
   coreValues: {
@@ -310,6 +326,91 @@ export const sectionSchemas: Record<string, SectionSchema> = {
         { name: "href", label: "Link (href)", kind: "text" },
       ],
     },
+  },
+  contact: {
+    key: "contact",
+    title: "Contact section",
+    description: "Heading, channels, and form success message on the home page.",
+    fields: [
+      { name: "eyebrow", label: "Eyebrow", kind: "text" },
+      { name: "title", label: "Title", kind: "text" },
+      { name: "body", label: "Body", kind: "textarea" },
+      {
+        name: "channels",
+        label: "Channels",
+        kind: "objectlist",
+        itemLabel: "Channel",
+        fields: [
+          { name: "label", label: "Label", kind: "text" },
+          { name: "value", label: "Email / value", kind: "text" },
+        ],
+      },
+      { name: "successTitle", label: "Success title", kind: "text" },
+      { name: "successBody", label: "Success message", kind: "textarea" },
+    ],
+  },
+  ui: {
+    key: "ui",
+    title: "UI text & labels",
+    description: "Section headers, buttons, and chrome shared across pages.",
+    fields: [
+      { name: "navCta", label: "Header CTA button", kind: "text" },
+      {
+        name: "coreValues",
+        label: "Core values header",
+        kind: "group",
+        fields: [
+          { name: "eyebrow", label: "Eyebrow", kind: "text" },
+          { name: "title", label: "Title", kind: "text" },
+          { name: "intro", label: "Intro", kind: "textarea" },
+        ],
+      },
+      {
+        name: "testimonials",
+        label: "Testimonials header",
+        kind: "group",
+        fields: [
+          { name: "eyebrow", label: "Eyebrow", kind: "text" },
+          { name: "title", label: "Title", kind: "text" },
+        ],
+      },
+      {
+        name: "newsletter",
+        label: "Footer newsletter",
+        kind: "group",
+        fields: [
+          { name: "label", label: "Label", kind: "text" },
+          { name: "success", label: "Success message", kind: "text" },
+        ],
+      },
+      {
+        name: "unit",
+        label: "Business-unit page labels",
+        kind: "group",
+        fields: [
+          { name: "overviewLabel", label: "Overview label", kind: "text" },
+          { name: "aboutTemplate", label: "About template ({group}, {short})", kind: "textarea" },
+          { name: "servicesEyebrow", label: "Services eyebrow", kind: "text" },
+          { name: "servicesTitle", label: "Services title", kind: "text" },
+          { name: "ctaTemplate", label: "CTA heading ({short})", kind: "text" },
+          { name: "ctaPrimary", label: "CTA primary button", kind: "text" },
+          { name: "ctaSecondary", label: "CTA secondary button", kind: "text" },
+          { name: "relatedTitle", label: "Related section title", kind: "text" },
+          { name: "partnerCta", label: "Hero primary button", kind: "text" },
+          { name: "allBusinessesCta", label: "Hero secondary button", kind: "text" },
+        ],
+      },
+      {
+        name: "sectionNav",
+        label: "Side section-nav labels",
+        kind: "objectlist",
+        itemLabel: "Section",
+        fields: [
+          { name: "id", label: "Section id (anchor)", kind: "text" },
+          { name: "label", label: "Label", kind: "text" },
+        ],
+      },
+    ],
   },
 };
 
@@ -363,6 +464,7 @@ export const DASHBOARD_SECTIONS: {
   { key: "investor", title: "Investor relations", href: "/admin/content/investor", available: true },
   { key: "contact", title: "Contact section", href: "/admin/content/contact", available: true },
   { key: "nav", title: "Navigation", href: "/admin/content/nav", available: true },
+  { key: "ui", title: "UI text & labels", href: "/admin/content/ui", available: true },
 ];
 
 /** Collections that have their own dedicated editors (not site_content). */

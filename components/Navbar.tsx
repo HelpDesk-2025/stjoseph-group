@@ -3,15 +3,21 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { nav as staticNav, company as staticCompany } from "@/lib/content";
+import {
+  nav as staticNav,
+  company as staticCompany,
+  ui as staticUi,
+} from "@/lib/content";
 import Logo from "./Logo";
 
 export default function Navbar({
   nav = staticNav,
   company = staticCompany,
+  navCta = staticUi.navCta,
 }: {
   nav?: typeof staticNav;
   company?: typeof staticCompany;
+  navCta?: string;
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -57,7 +63,7 @@ export default function Navbar({
 
         <div className="hidden lg:block">
           <Link href="/#contact" className="btn-primary">
-            Contact Us
+            {navCta}
           </Link>
         </div>
 

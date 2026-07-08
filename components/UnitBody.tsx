@@ -1,7 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import type { BusinessUnit, UnitMedia } from "@/lib/content";
+import {
+  ui as staticUi,
+  company as staticCompany,
+  type BusinessUnit,
+  type UnitMedia,
+} from "@/lib/content";
 import Reveal from "@/components/Reveal";
 import Counter from "@/components/Counter";
 import TiltCard from "@/components/TiltCard";
@@ -11,10 +16,18 @@ import UnitLogo from "@/components/UnitLogo";
 export default function UnitBody({
   unit,
   related,
+  labels = staticUi.unit,
+  groupName = staticCompany.name,
 }: {
   unit: BusinessUnit & UnitMedia;
   related: (BusinessUnit & UnitMedia)[];
+  labels?: typeof staticUi.unit;
+  groupName?: string;
 }) {
+  const aboutText = labels.aboutTemplate
+    .replace("{group}", groupName)
+    .replace("{short}", unit.short);
+  const ctaText = labels.ctaTemplate.replace("{short}", unit.short);
   return (
     <>
       {/* Overview + highlights */}
@@ -22,15 +35,13 @@ export default function UnitBody({
         <div className="container-x grid gap-12 lg:grid-cols-[1.4fr_1fr]">
           <Reveal>
             <div>
-              <span className="eyebrow">Overview</span>
+              <span className="eyebrow">{labels.overviewLabel}</span>
               <p className="mt-6 font-sans text-xl font-light leading-relaxed text-white sm:text-2xl">
                 {unit.description}
               </p>
               <div className="mt-8 h-px w-full bg-white/10" />
               <p className="mt-8 font-mono text-sm leading-relaxed text-ink-200">
-                {unit.summary} As part of St. Joseph Group, Inc., {unit.short} operates on
-                the shared EOS® framework and the group&apos;s five core values —
-                aligning every decision with our purpose of creating meaningful lives.
+                {unit.summary} {aboutText}
               </p>
             </div>
           </Reveal>
@@ -60,9 +71,9 @@ export default function UnitBody({
       <section className="relative border-y border-white/10 bg-navy-900/40 py-20 sm:py-24">
         <div className="container-x">
           <Reveal>
-            <span className="eyebrow">What We Do</span>
+            <span className="eyebrow">{labels.servicesEyebrow}</span>
             <h2 className="mt-4 heading-lg text-white">
-              Services &amp; capabilities
+              {labels.servicesTitle}
             </h2>
           </Reveal>
           <div className="mt-12 grid gap-4 sm:grid-cols-2">
@@ -99,14 +110,14 @@ export default function UnitBody({
               }}
             >
               <h2 className="mx-auto max-w-2xl font-sans text-3xl font-medium text-white sm:text-4xl">
-                Ready to build something meaningful with {unit.short}?
+                {ctaText}
               </h2>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Link href="/#contact" className="btn-primary">
-                  Get in touch
+                  {labels.ctaPrimary}
                 </Link>
                 <Link href="/investor-relations" className="btn-ghost">
-                  Investor relations
+                  {labels.ctaSecondary}
                 </Link>
               </div>
             </div>
@@ -119,12 +130,12 @@ export default function UnitBody({
         <div className="container-x">
           <Reveal>
             <div className="flex items-end justify-between">
-              <h2 className="heading-lg text-white">Explore more businesses</h2>
+              <h2 className="heading-lg text-white">{labels.relatedTitle}</h2>
               <Link
                 href="/#business-units"
                 className="hidden items-center gap-2 font-mono text-xs text-cyan hover:text-cyan-light sm:inline-flex"
               >
-                View all 9 <ArrowIcon className="h-3.5 w-3.5" />
+                View all <ArrowIcon className="h-3.5 w-3.5" />
               </Link>
             </div>
           </Reveal>

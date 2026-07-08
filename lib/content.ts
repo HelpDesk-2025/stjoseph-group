@@ -44,6 +44,7 @@ export const hero = {
     { value: "8,000+", label: "Team Members" },
     { value: "12", label: "Provinces Served" },
   ],
+  scrollHint: "Scroll",
 };
 
 /* ── BUSINESS UNITS (9) ────────────────────────────────────────────── */
@@ -400,6 +401,8 @@ export const coreValues = [
 export const journey = {
   eyebrow: "Our Journey",
   title: "A quarter-century of building",
+  intro:
+    "From a single enterprise to a diversified group of nine — a story of disciplined growth and enduring purpose.",
   milestones: [
     {
       year: "1998",
@@ -499,6 +502,7 @@ export const careers = {
     { role: "Branch Officer", unit: "SJ Finance", location: "Davao City", type: "Full-time" },
     { role: "Supply Chain Associate", unit: "SJ Logistics", location: "Laguna", type: "Full-time" },
   ],
+  openingsLabel: "Featured Openings",
   cta: { label: "View all openings", href: "#" },
 };
 
@@ -546,6 +550,26 @@ export const investor = {
     email: "investors@stjoseph-group.com",
     phone: "+63 (2) 8000 0100",
   },
+  performanceEyebrow: "Financial Performance",
+  performanceTitle: "Consistent, disciplined growth",
+  performanceBody:
+    "Over the past five years, St. Joseph Group, Inc. has delivered steady revenue expansion across its diversified portfolio — driven by operational discipline, prudent capital allocation, and a relentless focus on long-term value creation.",
+  performancePoints: [
+    "Diversification lowers concentration risk",
+    "EOS®-driven accountability across all units",
+    "Investment-grade balance sheet",
+  ],
+  governanceEyebrow: "Governance & Stewardship",
+  governanceTitle: "Built on trust and accountability",
+  reportsEyebrow: "Reports & Filings",
+  reportsTitle: "Download center",
+  reportsBody:
+    "Access our latest financial results, annual reports, and governance documents.",
+  contactBody:
+    "For investor inquiries, financial information, and partnership opportunities.",
+  chartTitle: "Group Revenue",
+  chartSubtitle: "in ₱ Billions · FY2020–FY2024",
+  chartNote: "+62% over 5 years",
 };
 
 /* ── CONTACT ───────────────────────────────────────────────────────── */
@@ -559,6 +583,9 @@ export const contact = {
     { label: "Careers", value: "careers@stjoseph-group.com" },
     { label: "Media", value: "media@stjoseph-group.com" },
   ],
+  successTitle: "Message received",
+  successBody:
+    "Thank you for reaching out. Our team will get back to you shortly.",
 };
 
 /* ── NAV ───────────────────────────────────────────────────────────── */
@@ -570,3 +597,46 @@ export const nav = [
   { label: "Careers", href: "/#careers" },
   { label: "Investors", href: "/investor-relations" },
 ];
+
+/* ── UI TEXT & LABELS (cross-cutting chrome) ───────────────────────────── */
+export const ui = {
+  navCta: "Contact Us",
+  coreValues: {
+    eyebrow: "What We Stand For",
+    title: "Our 5 Core Values",
+    intro:
+      "The non-negotiables that define who we are and how we work — across every business unit and every decision.",
+  },
+  testimonials: {
+    eyebrow: "In Their Words",
+    title: "Voices from across the group",
+  },
+  newsletter: {
+    label: "Get updates",
+    success: "Thanks — you're subscribed.",
+  },
+  unit: {
+    overviewLabel: "Overview",
+    aboutTemplate:
+      "As part of {group}, {short} operates on the shared EOS® framework and the group's five core values — aligning every decision with our purpose of creating meaningful lives.",
+    servicesEyebrow: "What We Do",
+    servicesTitle: "Services & capabilities",
+    ctaTemplate: "Ready to build something meaningful with {short}?",
+    ctaPrimary: "Get in touch",
+    ctaSecondary: "Investor relations",
+    relatedTitle: "Explore more businesses",
+    partnerCta: "Partner with us",
+    allBusinessesCta: "All businesses",
+  },
+  sectionNav: [
+    { id: "business-units", label: "Our Businesses" },
+    { id: "purpose", label: "Purpose" },
+    { id: "eos", label: "EOS" },
+    { id: "strategy", label: "Strategy" },
+    { id: "values", label: "Core Values" },
+    { id: "journey", label: "Journey" },
+    { id: "culture", label: "Culture" },
+    { id: "testimonials", label: "Voices" },
+    { id: "careers", label: "Careers" },
+  ],
+};

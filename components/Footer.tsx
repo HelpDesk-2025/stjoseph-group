@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   company as staticCompany,
   businessUnits as staticBusinessUnits,
+  ui as staticUi,
   type BusinessUnit,
 } from "@/lib/content";
 import Logo from "./Logo";
@@ -10,9 +11,11 @@ import NewsletterForm from "./NewsletterForm";
 export default function Footer({
   company = staticCompany,
   businessUnits = staticBusinessUnits,
+  newsletter = staticUi.newsletter,
 }: {
   company?: typeof staticCompany;
   businessUnits?: BusinessUnit[];
+  newsletter?: typeof staticUi.newsletter;
 }) {
   return (
     <footer className="relative border-t border-white/10 bg-navy">
@@ -85,10 +88,10 @@ export default function Footer({
 
           <div className="mt-6">
             <p className="font-mono text-[10px] uppercase tracking-widest text-ink-300">
-              Get updates
+              {newsletter.label}
             </p>
             <div className="mt-3">
-              <NewsletterForm source="footer" />
+              <NewsletterForm source="footer" successMessage={newsletter.success} />
             </div>
           </div>
         </div>
