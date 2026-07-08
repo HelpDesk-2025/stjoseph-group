@@ -125,7 +125,7 @@ export default function Navbar({
                         className="absolute left-0 top-full z-50 mt-3 origin-top-left"
                       >
                         <div className="overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_24px_60px_-12px_rgba(4,4,16,0.35)] ring-1 ring-black/5">
-                          <div className="border-b border-black/[0.06] bg-[#faf8f4] px-5 py-3.5">
+                          <div className="border-b border-black/[0.06] px-5 py-3.5">
                             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-deep">
                               Our Businesses
                             </p>
@@ -143,7 +143,7 @@ export default function Navbar({
                                   className="group/item flex items-center gap-3 rounded-xl px-2.5 py-2.5 transition-colors hover:bg-navy/[0.05]"
                                 >
                                   <span
-                                    className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-lg bg-[#f4f1ea] p-1.5 ring-1 ring-black/[0.06]"
+                                    className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-lg"
                                     style={{ color: u.accent }}
                                   >
                                     <UnitLogo
