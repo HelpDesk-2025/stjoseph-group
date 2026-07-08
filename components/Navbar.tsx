@@ -124,12 +124,12 @@ export default function Navbar({
                         transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
                         className="absolute left-0 top-full z-50 mt-3 origin-top-left"
                       >
-                        <div className="overflow-hidden rounded-2xl border border-white/10 bg-navy-900/95 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.7)] ring-1 ring-black/40 backdrop-blur-xl">
-                          <div className="border-b border-white/[0.06] px-5 py-3.5">
-                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber">
+                        <div className="overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_24px_60px_-12px_rgba(4,4,16,0.35)] ring-1 ring-black/5">
+                          <div className="border-b border-black/[0.06] bg-[#faf8f4] px-5 py-3.5">
+                            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-deep">
                               Our Businesses
                             </p>
-                            <p className="mt-0.5 font-sans text-[13px] text-ink-300">
+                            <p className="mt-0.5 font-sans text-[13px] text-navy/60">
                               {businessUnits.length} companies, one group
                             </p>
                           </div>
@@ -140,10 +140,10 @@ export default function Navbar({
                                 <Link
                                   href={`/business-units/${u.slug}`}
                                   onClick={() => setBizOpen(false)}
-                                  className="group/item flex items-center gap-3 rounded-xl px-2.5 py-2.5 transition-colors hover:bg-white/[0.06]"
+                                  className="group/item flex items-center gap-3 rounded-xl px-2.5 py-2.5 transition-colors hover:bg-navy/[0.05]"
                                 >
                                   <span
-                                    className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-lg bg-white p-1.5 ring-1 ring-black/5"
+                                    className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-lg bg-[#f4f1ea] p-1.5 ring-1 ring-black/[0.06]"
                                     style={{ color: u.accent }}
                                   >
                                     <UnitLogo
@@ -154,10 +154,10 @@ export default function Navbar({
                                     />
                                   </span>
                                   <span className="min-w-0">
-                                    <span className="block truncate font-sans text-[13.5px] font-medium text-white transition-colors group-hover/item:text-amber">
+                                    <span className="block truncate font-sans text-[13.5px] font-medium text-navy transition-colors group-hover/item:text-amber-deep">
                                       {u.name}
                                     </span>
-                                    <span className="block truncate font-mono text-[10.5px] uppercase tracking-wide text-ink-400">
+                                    <span className="block truncate font-mono text-[10.5px] uppercase tracking-wide text-navy/45">
                                       {u.sector}
                                     </span>
                                   </span>
@@ -169,7 +169,7 @@ export default function Navbar({
                           <Link
                             href={item.href}
                             onClick={() => setBizOpen(false)}
-                            className="flex items-center justify-center gap-2 border-t border-white/[0.06] px-5 py-3 font-mono text-[11px] uppercase tracking-wider text-ink-300 transition-colors hover:bg-white/[0.03] hover:text-amber"
+                            className="flex items-center justify-center gap-2 border-t border-black/[0.06] px-5 py-3 font-mono text-[11px] uppercase tracking-wider text-navy/55 transition-colors hover:bg-navy/[0.04] hover:text-amber-deep"
                           >
                             Overview on the home page
                             <ArrowIcon className="h-3.5 w-3.5" />
