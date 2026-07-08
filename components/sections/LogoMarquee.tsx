@@ -34,9 +34,9 @@ export default function LogoMarquee({
               href={`/business-units/${u.slug}`}
               aria-label={u.name}
               title={u.short}
-              className="grid h-20 w-20 place-items-center text-white opacity-60 transition-opacity duration-300 hover:opacity-100"
+              className="grid h-28 w-28 place-items-center text-white opacity-60 transition-opacity duration-300 hover:opacity-100"
             >
-              <UnitLogo logo={u.logo} slug={u.slug} name={u.name} className="h-16 w-16" />
+              <UnitLogo logo={u.logo} slug={u.slug} name={u.name} className="h-24 w-24" />
             </Link>
           </li>
         ))}
