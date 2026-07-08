@@ -17,7 +17,12 @@ export default async function SiteLayout({
 
   return (
     <SmoothScroll>
-      <Navbar nav={nav} company={company} navCta={ui.navCta} />
+      <Navbar
+        nav={nav}
+        company={company}
+        navCta={ui.navCta}
+        businessUnits={businessUnits}
+      />
       <main>{children}</main>
       <Footer
         company={company}
