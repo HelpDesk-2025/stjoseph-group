@@ -1,9 +1,12 @@
 /**
- * Seed the Supabase CMS tables from the static content in `lib/content.ts`,
- * which stays the single source of truth. Safe to re-run: business units are
- * upserted by slug, testimonials are fully replaced.
+ * Seed the Supabase CMS tables from the static content in `lib/content.ts`.
  *
  *   npm run seed
+ *
+ * SAFE / ADDITIVE: this only inserts rows that don't already exist. It never
+ * overwrites or deletes content you've edited in the admin, so it is safe to
+ * run at any time (e.g. to populate a brand-new project). Existing site
+ * sections, business units, and testimonials are left untouched.
  *
  * Requires NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in
  * .env.local (see SUPABASE_SETUP.md).
@@ -56,7 +59,7 @@ const supabase = createClient(url, key, {
 });
 
 async function main() {
-  // Singleton / structured sections → site_content (upsert by key).
+  // ── Singleton sections → site_content (insert ONLY missing keys) ────────
   const siteContent: Record<string, unknown> = {
     company,
     hero,
@@ -71,66 +74,76 @@ async function main() {
     contact,
     nav,
   };
-  const contentRows = Object.entries(siteContent).map(([key, data]) => ({
-    key,
-    data,
-    updated_at: new Date().toISOString(),
-  }));
-  const { error: scErr } = await supabase
+  const { data: existingContent } = await supabase
     .from("site_content")
-    .upsert(contentRows, { onConflict: "key" });
-  if (scErr) throw scErr;
-  console.log(`✓ Seeded ${contentRows.length} content sections`);
+    .select("key");
+  const existingKeys = new Set((existingContent ?? []).map((r) => r.key));
+  const contentRows = Object.entries(siteContent)
+    .filter(([k]) => !existingKeys.has(k))
+    .map(([key, data]) => ({ key, data, updated_at: new Date().toISOString() }));
+  if (contentRows.length) {
+    const { error } = await supabase.from("site_content").insert(contentRows);
+    if (error) throw error;
+  }
+  console.log(
+    `✓ Content sections: ${contentRows.length} added, ${existingKeys.size} left untouched`
+  );
 
-  // Business units — upsert by slug so edits re-sync without duplicating.
-  const unitRows = businessUnits.map((u, i) => ({
-    slug: u.slug,
-    name: u.name,
-    short: u.short,
-    sector: u.sector,
-    tagline: u.tagline,
-    summary: u.summary,
-    description: u.description,
-    accent: u.accent,
-    founded: u.founded,
-    highlights: u.highlights,
-    services: u.services,
-    logo: null,
-    page_logo: null,
-    hero_image: null,
-    gallery: fallbackGallery(u.slug, 1200),
-    sort_order: i,
-    published: true,
-    updated_at: new Date().toISOString(),
-  }));
-
-  const { error: buErr } = await supabase
+  // ── Business units (insert ONLY missing slugs) ──────────────────────────
+  const { data: existingUnits } = await supabase
     .from("business_units")
-    .upsert(unitRows, { onConflict: "slug" });
-  if (buErr) throw buErr;
-  console.log(`✓ Seeded ${unitRows.length} business units`);
+    .select("slug");
+  const existingSlugs = new Set((existingUnits ?? []).map((r) => r.slug));
+  const unitRows = businessUnits
+    .filter((u) => !existingSlugs.has(u.slug))
+    .map((u, i) => ({
+      slug: u.slug,
+      name: u.name,
+      short: u.short,
+      sector: u.sector,
+      tagline: u.tagline,
+      summary: u.summary,
+      description: u.description,
+      accent: u.accent,
+      founded: u.founded,
+      logo: null,
+      page_logo: null,
+      hero_image: null,
+      gallery: fallbackGallery(u.slug, 1200),
+      highlights: u.highlights,
+      services: u.services,
+      sort_order: existingSlugs.size + i,
+      published: true,
+      updated_at: new Date().toISOString(),
+    }));
+  if (unitRows.length) {
+    const { error } = await supabase.from("business_units").insert(unitRows);
+    if (error) throw error;
+  }
+  console.log(
+    `✓ Business units: ${unitRows.length} added, ${existingSlugs.size} left untouched`
+  );
 
-  // Testimonials — replace wholesale (no natural key).
-  const { error: delErr } = await supabase
+  // ── Testimonials (seed ONLY if the table is empty) ──────────────────────
+  const { count } = await supabase
     .from("testimonials")
-    .delete()
-    .neq("id", "00000000-0000-0000-0000-000000000000");
-  if (delErr) throw delErr;
+    .select("*", { count: "exact", head: true });
+  if (!count) {
+    const rows = testimonials.map((t, i) => ({
+      quote: t.quote,
+      name: t.name,
+      role: t.role,
+      sort_order: i,
+      published: true,
+    }));
+    const { error } = await supabase.from("testimonials").insert(rows);
+    if (error) throw error;
+    console.log(`✓ Testimonials: ${rows.length} added`);
+  } else {
+    console.log(`✓ Testimonials: ${count} already present, left untouched`);
+  }
 
-  const testimonialRows = testimonials.map((t, i) => ({
-    quote: t.quote,
-    name: t.name,
-    role: t.role,
-    sort_order: i,
-    published: true,
-  }));
-  const { error: tErr } = await supabase
-    .from("testimonials")
-    .insert(testimonialRows);
-  if (tErr) throw tErr;
-  console.log(`✓ Seeded ${testimonialRows.length} testimonials`);
-
-  console.log("\nDone. Your site will now serve CMS content from Supabase.");
+  console.log("\nDone (additive seed — nothing overwritten).");
 }
 
 main().catch((e) => {

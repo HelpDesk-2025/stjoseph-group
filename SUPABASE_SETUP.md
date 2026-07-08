@@ -64,7 +64,9 @@ Populate `business_units` and `testimonials` from `lib/content.ts`:
 npm run seed
 ```
 
-Re-runnable: business units upsert by slug, testimonials are replaced.
+Safe to re-run: the seed is **additive** — it only inserts sections, business
+units, or testimonials that don't already exist, and never overwrites or
+deletes content you've edited in the admin.
 
 ## 5. Run it
 
