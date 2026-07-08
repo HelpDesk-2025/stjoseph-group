@@ -137,10 +137,10 @@ export default function UnitBody({
                     className="relative flex h-full flex-col overflow-hidden rounded-card border border-white/10 bg-navy-800/50 p-6 transition-colors hover:border-white/25"
                   >
                     <span
-                      className="grid h-11 w-11 place-items-center overflow-hidden rounded-xl border border-white/10"
-                      style={{ color: r.accent, background: `${r.accent}1a` }}
+                      className="grid h-20 w-20 place-items-center overflow-hidden rounded-xl border border-white/10 bg-white p-2.5 shadow-lg"
+                      style={{ color: r.accent }}
                     >
-                      <UnitLogo logo={r.page_logo} slug={r.slug} name={r.name} className="h-5 w-5" />
+                      <UnitLogo logo={r.page_logo} slug={r.slug} name={r.name} className="h-full w-full" />
                     </span>
                     <h3 className="mt-5 font-sans text-base font-semibold text-white">
                       {r.name}
