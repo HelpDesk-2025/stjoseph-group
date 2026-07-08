@@ -108,7 +108,7 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 /* ── Business units ────────────────────────────────────────────────────── */
 
 const BU_COLUMNS =
-  "slug, name, short, sector, tagline, summary, description, accent, founded, highlights, services, logo, hero_image, gallery";
+  "slug, name, short, sector, tagline, summary, description, accent, founded, highlights, services, logo, page_logo, hero_image, gallery";
 
 export async function getBusinessUnits(): Promise<BusinessUnitWithImages[]> {
   const supabase = getServerSupabase();

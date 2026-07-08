@@ -96,6 +96,7 @@ async function main() {
     highlights: u.highlights,
     services: u.services,
     logo: null,
+    page_logo: null,
     hero_image: null,
     gallery: fallbackGallery(u.slug, 1200),
     sort_order: i,

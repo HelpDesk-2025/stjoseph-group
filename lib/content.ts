@@ -63,7 +63,8 @@ export type BusinessUnit = {
 
 /** CMS-managed imagery attached to a business unit (all optional). */
 export type UnitMedia = {
-  logo?: string | null;
+  logo?: string | null; // hero marquee
+  page_logo?: string | null; // business-unit page (hero badge + related cards)
   hero_image?: string | null;
   gallery?: string[] | null;
 };

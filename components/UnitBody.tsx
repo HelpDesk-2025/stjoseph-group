@@ -140,7 +140,7 @@ export default function UnitBody({
                       className="grid h-11 w-11 place-items-center overflow-hidden rounded-xl border border-white/10"
                       style={{ color: r.accent, background: `${r.accent}1a` }}
                     >
-                      <UnitLogo logo={r.logo} slug={r.slug} name={r.name} className="h-5 w-5" />
+                      <UnitLogo logo={r.page_logo} slug={r.slug} name={r.name} className="h-5 w-5" />
                     </span>
                     <h3 className="mt-5 font-sans text-base font-semibold text-white">
                       {r.name}

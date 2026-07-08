@@ -45,6 +45,7 @@ export async function saveBusinessUnit(slug: string, dataJson: string): Promise<
       accent: d.accent,
       founded: d.founded,
       logo: d.logo || null,
+      page_logo: d.page_logo || null,
       hero_image: d.hero_image || null,
       gallery: d.gallery ?? [],
       highlights: d.highlights ?? [],

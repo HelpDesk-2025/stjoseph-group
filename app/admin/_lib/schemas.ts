@@ -326,7 +326,8 @@ export const businessUnitSchema: SectionSchema = {
     { name: "description", label: "Description", kind: "textarea" },
     { name: "accent", label: "Accent colour (hex)", kind: "text" },
     { name: "founded", label: "Founded", kind: "text" },
-    { name: "logo", label: "Logo (marquee + unit page)", kind: "image", folder: "logos" },
+    { name: "logo", label: "Marquee logo (hero strip)", kind: "image", folder: "logos" },
+    { name: "page_logo", label: "Unit page logo (badge + related)", kind: "image", folder: "logos" },
     { name: "hero_image", label: "Hero image", kind: "image", folder: "business-units" },
     { name: "gallery", label: "Gallery images", kind: "imagelist", folder: "business-units" },
     {
