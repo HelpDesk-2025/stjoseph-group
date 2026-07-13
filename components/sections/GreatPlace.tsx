@@ -3,6 +3,7 @@
 import { greatPlace as staticGreatPlace } from "@/lib/content";
 import Reveal from "@/components/Reveal";
 import Counter from "@/components/Counter";
+import Parallax from "@/components/Parallax";
 
 export default function GreatPlace({
   data = staticGreatPlace,
@@ -45,21 +46,23 @@ export default function GreatPlace({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            {greatPlace.stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 0.08}>
-                <div className="rounded-card border border-white/10 bg-navy-800/50 p-6 text-center transition-colors hover:border-cyan/40">
-                  <Counter
-                    value={s.value}
-                    className="font-sans text-4xl font-bold text-gradient-cyan"
-                  />
-                  <p className="mt-2 font-mono text-[11px] uppercase tracking-wider text-ink-300">
-                    {s.label}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Parallax offset={55}>
+            <div className="grid grid-cols-2 gap-4">
+              {greatPlace.stats.map((s, i) => (
+                <Reveal key={s.label} delay={i * 0.08}>
+                  <div className="rounded-card border border-white/10 bg-navy-800/50 p-6 text-center transition-colors hover:border-cyan/40">
+                    <Counter
+                      value={s.value}
+                      className="font-sans text-4xl font-bold text-gradient-cyan"
+                    />
+                    <p className="mt-2 font-mono text-[11px] uppercase tracking-wider text-ink-300">
+                      {s.label}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </Parallax>
         </div>
       </div>
     </section>

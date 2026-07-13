@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { meaningfulLives as staticMeaningfulLives } from "@/lib/content";
 import Reveal from "@/components/Reveal";
+import Parallax from "@/components/Parallax";
 
 export default function MeaningfulLives({
   data = staticMeaningfulLives,
@@ -43,9 +44,10 @@ export default function MeaningfulLives({
           </Reveal>
         </div>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
+        <div className="mt-16 grid items-start gap-6 md:grid-cols-3">
           {meaningfulLives.pillars.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.1}>
+            <Parallax key={p.title} offset={20 + i * 22} className="h-full">
+            <Reveal delay={i * 0.1}>
               <div className="group relative h-full overflow-hidden rounded-card border border-white/10 bg-navy-800/40 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-amber/40">
                 <div className="mb-5 h-px w-12 bg-amber transition-all duration-300 group-hover:w-20" />
                 <h3 className="font-sans text-xl font-semibold text-white">
@@ -56,6 +58,7 @@ export default function MeaningfulLives({
                 </p>
               </div>
             </Reveal>
+            </Parallax>
           ))}
         </div>
       </div>
