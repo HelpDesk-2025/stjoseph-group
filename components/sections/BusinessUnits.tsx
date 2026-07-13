@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { businessUnits as staticBusinessUnits, type BusinessUnit } from "@/lib/content";
 import { fallbackGallery } from "@/lib/unit-gallery";
 import Reveal from "@/components/Reveal";
@@ -26,6 +26,9 @@ export default function BusinessUnits({
   const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [subImage, setSubImage] = useState(0);
+  // Pause auto-play while the section is off-screen.
+  const sectionRef = useRef<HTMLElement>(null);
+  const inView = useInView(sectionRef, { amount: 0.2 });
 
   // reset to the hero shot whenever the active unit changes
   useEffect(() => {
@@ -52,10 +55,10 @@ export default function BusinessUnits({
   };
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !inView) return;
     const interval = setInterval(handleNext, AUTO_PLAY_DURATION);
     return () => clearInterval(interval);
-  }, [activeIndex, isPaused, handleNext]);
+  }, [activeIndex, isPaused, inView, handleNext]);
 
   const variants = {
     enter: (dir: number) => ({ y: dir > 0 ? "-100%" : "100%", opacity: 0 }),
@@ -76,6 +79,7 @@ export default function BusinessUnits({
 
   return (
     <section
+      ref={sectionRef}
       id="business-units"
       className="relative overflow-hidden border-y border-black/[0.06] bg-[#f6f3ee] py-24 text-navy sm:py-28"
     >
